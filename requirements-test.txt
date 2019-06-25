@@ -1,0 +1,4 @@
+-r requirements.txt
+bumpversion==0.5.3
+coveralls==1.8.1
+flake8==3.7.7

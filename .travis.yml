@@ -1,0 +1,43 @@
+dist: xenial
+language: python
+
+cache: pip
+
+python:
+  - 3.5
+  - 3.6
+  - 3.7
+
+env:
+  - DJANGO_VERSION=1.11.21
+  - DJANGO_VERSION=2.1.9
+  - DJANGO_VERSION=2.2.3
+
+matrix:
+  include:
+    - python: 3.6
+      env: DJANGO_VERSION=2.1.9 DEPLOY=true
+
+install:
+  - pip install -q Django==$DJANGO_VERSION
+  - pip install .
+  - pip install -r requirements-test.txt
+
+script:
+  - coverage run --source=easys_ordermanager manage.py test
+  - flake8 easys_ordermanager
+
+after_success:
+  - coveralls
+
+deploy:
+  provider: pypi
+  user: RegioHelden
+  password:
+    secure: QA9vKMNbg73RUc8K1FS+XEslT73jmMgH+pxDgwPvHyigZbchLYqtLr7tKqfLfJdiftb1F2g5qEVr/Thgr+jS2bueoY7lf/5FK/0+7L8IyFGpqBWge8It4ZGvbnhY/r3MyEtiwekwU19O/+egthIg55oHVvNCi6nmhKak32Qu3c/LYKTmfsn2neARaTRKlf5BWVEX9fgZ/zQFLAAS4eEhRunqsFqj0KhPp9J7nZyDPajfn2ri551820u6W82448WQnHOkNxhApC8f4VNVCJnSqEIShTczjr+tVIDXJj4FytIcHljbbRe/7Ik3IE3FN/T/1J2M+aF8spjn/SUr26Fd+kUDWY413ol1xFhf80ckyM5rna0Q9QXzdnn81Rvn7y6oexzORJKm5eYHQR3qXx343BHbnCXlpsLqwDVVByxkw6KUzBAzSI4TGlW/Sow1flxnPwC8Yq7RCwk2ecI6g1sXZRiyguXMUsM/NoP4RhrfmcNQX7+f0jG24kuKxkY8Mmy6oy12HWlY8rEPNrgQ7noeDMOgG8lfvcSLwtMKGebwzXlP9nfuiLuCNii8mCH+n8AjJhF1nYPgcDIpmXW4gfyAerpn4wHBOKgnQa6Op8W0LJ7ZqTTlqt7sw/46BXev6icj6ZCT9vJcZ3JKiwPugdkT7iA9bDzfYQZCqTj0pSTmAQY=
+  on:
+    tags: true
+    all_branches: true
+    distributions: "sdist bdist_wheel"
+    python: 3.6
+    condition: "$DEPLOY = true"

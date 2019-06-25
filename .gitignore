@@ -1,0 +1,12 @@
+*.mo
+*.pyc
+.idea/
+.vagrant/
+.pycharm_helpers/
+dist/
+*.egg-info/
+build/
+*.sw*
+.coverage
+celerybeat-schedule.db
+.bash_history
