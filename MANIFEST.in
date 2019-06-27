@@ -1,2 +1,2 @@
-include LICENSE.md README.md
+include LICENSE.md README.md CHANGELOG.md requirements.txt
 recursive-include easys_ordermanager/ *
