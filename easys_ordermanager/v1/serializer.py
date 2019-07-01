@@ -503,7 +503,7 @@ class AccountSerializer(serializers.Serializer):
     generic comment on the customer
 
     """
-    comment = serializers.CharField(max_length=200, required=False)
+    comment = serializers.CharField(max_length=200, allow_blank=True, required=False)
 
     """
     customer name, this should usually be the full legal name of the customers company
@@ -515,19 +515,19 @@ class AccountSerializer(serializers.Serializer):
     company description
 
     """
-    description = serializers.CharField(max_length=200, required=False)
+    description = serializers.CharField(max_length=200, allow_blank=True, required=False)
 
     """
     usp describing the customers competitive advantage
 
     """
-    usp = serializers.CharField(max_length=200, required=False)
+    usp = serializers.CharField(max_length=200, allow_blank=True, required=False)
 
     """
     comprehensive goal of the whole advertisement campaign of the customer
 
     """
-    campaign_goal = serializers.CharField(max_length=200, required=False)
+    campaign_goal = serializers.CharField(max_length=200, allow_blank=True, required=False)
 
 
 class ContactSerializer(serializers.Serializer):
@@ -554,11 +554,11 @@ class ContactSerializer(serializers.Serializer):
     salesforce user id of the contact
 
     """
-    salesforce_id = serializers.CharField(min_length=15, max_length=18, required=False)
+    salesforce_id = serializers.CharField(min_length=15, max_length=18, allow_blank=True, required=False)
 
     """
     """
-    phone = PhoneNumberField(required=False)
+    phone = PhoneNumberField(allow_null=True, required=False)
 
     """
     """
@@ -566,22 +566,22 @@ class ContactSerializer(serializers.Serializer):
 
     """
     """
-    title = serializers.ChoiceField(choices=TITLE_CHOICES, required=False)
+    title = serializers.ChoiceField(choices=TITLE_CHOICES, allow_blank=True, required=False)
 
     """
     """
-    first_name = serializers.CharField(max_length=255, required=False)
+    first_name = serializers.CharField(max_length=255, allow_blank=True, required=False)
 
     """
     """
-    last_name = serializers.CharField(max_length=255, required=False)
+    last_name = serializers.CharField(max_length=255, allow_blank=True, required=False)
 
     """
     when is the contact best available
     e.g. craftsmen aren't easy to reach while they're out of office at the customers place doing their job
 
     """
-    opportune_contact_moment = serializers.CharField(max_length=1000, required=False)
+    opportune_contact_moment = serializers.CharField(max_length=1000, allow_blank=True, required=False)
 
     """
     is the contact authorized to sign contract on behalf of the company?
@@ -666,7 +666,7 @@ class AccountLocationSerializer(serializers.Serializer):
     account owner of the legal entity that is represented by this location
 
     """
-    owner = serializers.CharField(max_length=50, required=False)
+    owner = serializers.CharField(max_length=50, allow_blank=True, required=False)
 
     """
     plain street name part of address
@@ -678,13 +678,13 @@ class AccountLocationSerializer(serializers.Serializer):
     pure house number (integer) part of address
 
     """
-    house_number = serializers.CharField(max_length=10, required=False)
+    house_number = serializers.CharField(max_length=10, allow_blank=True, required=False)
 
     """
     house number addition part of address, e.g. "/1", "a", "Apartment 23"
 
     """
-    house_number_addition = serializers.CharField(max_length=100, required=False)
+    house_number_addition = serializers.CharField(max_length=100, allow_blank=True, required=False)
 
     """
     zip code
@@ -708,25 +708,25 @@ class AccountLocationSerializer(serializers.Serializer):
     latitude of location
 
     """
-    geo_latitude = serializers.FloatField(required=False)
+    geo_latitude = serializers.FloatField(allow_null=True, required=False)
 
     """
     longitude of location
 
     """
-    geo_longitude = serializers.FloatField(required=False)
+    geo_longitude = serializers.FloatField(allow_null=True, required=False)
 
     """
     id of the google places dataset of that location
 
     """
-    google_places_id = serializers.CharField(max_length=30, required=False)
+    google_places_id = serializers.CharField(max_length=30, allow_blank=True, required=False)
 
     """
     is this the primary location of the customer?
 
     """
-    is_primary_location = serializers.BooleanField(required=False)
+    is_primary_location = serializers.BooleanField(allow_null=True, required=False)
 
     """
     plain street name part of billing address
@@ -734,7 +734,7 @@ class AccountLocationSerializer(serializers.Serializer):
     billing address information must always be provided even if it just duplicates the location address
 
     """
-    billing_street = serializers.CharField(max_length=100, required=True)
+    billing_street = serializers.CharField(max_length=100, allow_blank=True, required=True)
 
     """
     pure house number (integer) part of billing address
@@ -742,7 +742,7 @@ class AccountLocationSerializer(serializers.Serializer):
     billing address information must always be provided even if it just duplicates the location address
 
     """
-    billing_house_number = serializers.CharField(max_length=10, required=False)
+    billing_house_number = serializers.CharField(max_length=10, allow_blank=True, required=False)
 
     """
     house number addition part of billing address, e.g. "/1", "a", "Apartment 23"
@@ -750,7 +750,7 @@ class AccountLocationSerializer(serializers.Serializer):
     billing address information must always be provided even if it just duplicates the location address
 
     """
-    billing_house_number_addition = serializers.CharField(max_length=100, required=False)
+    billing_house_number_addition = serializers.CharField(max_length=100, allow_blank=True, required=False)
 
     """
     billing zip code
@@ -798,14 +798,14 @@ class AccountLocationSerializer(serializers.Serializer):
     phone number of billing contact
 
     """
-    billing_phone = PhoneNumberField(required=False)
+    billing_phone = PhoneNumberField(allow_null=True, required=False)
 
     """
     email address to sent invoices and other billing documents to
     let blank if billing documents should be sent by classic mail
 
     """
-    billing_email = serializers.EmailField(required=False)
+    billing_email = serializers.EmailField(allow_blank=True, required=False)
 
     """
     is the customer freed from paying tax?
@@ -817,7 +817,8 @@ class AccountLocationSerializer(serializers.Serializer):
     customer vat number to be added to the invoice for input tax deduction
 
     """
-    billing_vat_number = serializers.CharField(max_length=16, required=False, validators=[VATNumberValidator()])
+    billing_vat_number = serializers.CharField(
+        max_length=16, allow_blank=True, required=False, validators=[VATNumberValidator()])
 
     """
     payment method of the customer, currently charge and transfer are supported
@@ -833,7 +834,8 @@ class AccountLocationSerializer(serializers.Serializer):
 
         orders.billing_contact_id)
     """
-    payment_debit_account_iban = serializers.CharField(max_length=34, required=False, validators=[IBANValidator()])
+    payment_debit_account_iban = serializers.CharField(
+        max_length=34, allow_blank=True, required=False, validators=[IBANValidator()])
 
     """
     owner of the customers bank account that will be charged
@@ -843,7 +845,7 @@ class AccountLocationSerializer(serializers.Serializer):
 
         else relate to orders.billing_company_id)
     """
-    payment_debit_account_owner = serializers.CharField(max_length=70, required=False)
+    payment_debit_account_owner = serializers.CharField(max_length=70, allow_blank=True, required=False)
 
 
 class OrderLineGoogleAdsSerializer(serializers.Serializer):
@@ -855,14 +857,14 @@ class OrderLineGoogleAdsSerializer(serializers.Serializer):
     call to action text, e.g. "Need help? Call us now"
 
     """
-    call_to_action = serializers.CharField(max_length=200, required=False)
+    call_to_action = serializers.CharField(max_length=200, allow_blank=True, required=False)
 
     """
     what goals should be reached with the advertisement campaign?
     e.g. get new customers, spread word about a product, etc.
 
     """
-    campaign_goal = serializers.CharField(max_length=200, required=False)
+    campaign_goal = serializers.CharField(max_length=200, allow_blank=True, required=False)
 
     """
     which cities/regions should the ad be targeted on?
@@ -874,13 +876,13 @@ class OrderLineGoogleAdsSerializer(serializers.Serializer):
     the expected impression share when the campaign budget is initially calculated
 
     """
-    expected_impression_share = serializers.DecimalField(decimal_places=2, max_digits=4, required=False)
+    expected_impression_share = serializers.DecimalField(decimal_places=2, max_digits=4, allow_null=True, required=False)
 
     """
     the expected impressions when the campaign budget is initially calculated
 
     """
-    expected_impressions = serializers.CharField(max_length=50, required=False)
+    expected_impressions = serializers.CharField(max_length=50, allow_blank=True, required=False)
 
     """
     the expected clicks when the campaign budget is initially calculated
@@ -898,7 +900,7 @@ class OrderLineGoogleAdsSerializer(serializers.Serializer):
     does the customer already have a google ads account that we should take over and optimize, provide the account id
 
     """
-    existing_account_id = serializers.CharField(max_length=10, required=False)
+    existing_account_id = serializers.CharField(max_length=10, allow_blank=True, required=False)
 
     """
     does the customer want to have a remarketing campaign included?
@@ -963,13 +965,13 @@ class OrderLineDisplaySerializer(serializers.Serializer):
         products.product_type
         order_line_online_details.banner_booking_type
     """
-    impressions_per_month = serializers.IntegerField(required=False)
+    impressions_per_month = serializers.IntegerField(allow_null=True, required=False)
 
     """
     impressions per day, used for fixed runtime premium product
 
     """
-    impressions_per_day = serializers.IntegerField(required=False)
+    impressions_per_day = serializers.IntegerField(allow_null=True, required=False)
 
     """
     age range selection the ad should be targeted on
@@ -981,7 +983,7 @@ class OrderLineDisplaySerializer(serializers.Serializer):
     gender selection the ad should be targeted on
 
     """
-    gender_targeting = serializers.ChoiceField(choices=DISPLAY_GENDER_CHOICES, required=False)
+    gender_targeting = serializers.ChoiceField(choices=DISPLAY_GENDER_CHOICES, allow_null=True, required=False)
 
     """
     list of german zip codes used for geographical targeting
@@ -1011,7 +1013,7 @@ class OrderLineDisplaySerializer(serializers.Serializer):
     e.g. get new customers, spread word about a product, etc.
 
     """
-    campaign_goal = serializers.CharField(max_length=1000, required=False)
+    campaign_goal = serializers.CharField(max_length=1000, allow_blank=True, required=False)
 
     """
     headline text that will be shown on the creative
@@ -1041,19 +1043,19 @@ class OrderLineDisplaySerializer(serializers.Serializer):
     color code to be used when designing the creative (priority 1)
 
     """
-    color_code_1 = serializers.CharField(max_length=7, required=False)
+    color_code_1 = serializers.CharField(max_length=7, allow_blank=True, required=False)
 
     """
     color code to be used when designing the creative (priority 2)
 
     """
-    color_code_2 = serializers.CharField(max_length=7, required=False)
+    color_code_2 = serializers.CharField(max_length=7, allow_blank=True, required=False)
 
     """
     color code to be used when designing the creative (priority 3)
 
     """
-    color_code_3 = serializers.CharField(max_length=7, required=False)
+    color_code_3 = serializers.CharField(max_length=7, allow_blank=True, required=False)
 
     """
     does the customer allow usage of stock images?
@@ -1071,13 +1073,13 @@ class OrderLineDisplaySerializer(serializers.Serializer):
     url of the ads target website if LANDING_PAGE_CUSTOMER is chosen in target_page_type
 
     """
-    target_url = serializers.URLField(required=False)
+    target_url = serializers.URLField(allow_blank=True, required=False)
 
     """
     creative template selected for basic product variant, will be ignored in premium and professional types
     EASYS: order_line_online_details.banner_layout
     """
-    package_template = serializers.IntegerField(required=False)
+    package_template = serializers.IntegerField(allow_null=True, required=False)
 
     """
     what location should be added to the location framing of the creative?
@@ -1085,7 +1087,7 @@ class OrderLineDisplaySerializer(serializers.Serializer):
 
     EASYS: order_line_online_details.banner_location_frame
     """
-    location_frame_text = serializers.CharField(max_length=50, required=False)
+    location_frame_text = serializers.CharField(max_length=50, allow_blank=True, required=False)
 
     """
     will the customer provide creatives or do we have to create new ones?
@@ -1131,7 +1133,7 @@ class OrderLineFacebookSerializer(serializers.Serializer):
     e.g. get new customers, spread word about a product, etc.
 
     """
-    campaign_goal = serializers.CharField(max_length=1000, required=False)
+    campaign_goal = serializers.CharField(max_length=1000, allow_blank=True, required=False)
 
     """
     does the customer allow usage of stock images?
@@ -1150,13 +1152,13 @@ class OrderLineFacebookSerializer(serializers.Serializer):
     link to existing facebook page, only if create_page is false
 
     """
-    page_url = serializers.URLField(required=False)
+    page_url = serializers.URLField(allow_blank=True, required=False)
 
     """
     login email to existing facebook page account, only if create_page is false
 
     """
-    page_login_email = serializers.EmailField(required=False)
+    page_login_email = serializers.EmailField(allow_blank=True, required=False)
 
     """
     chose which type of target page should be used in the ad? new or existing website
@@ -1168,7 +1170,7 @@ class OrderLineFacebookSerializer(serializers.Serializer):
     url of the ads target website if LANDING_PAGE_CUSTOMER is chosen in target_page_type
 
     """
-    target_url = serializers.URLField(required=False)
+    target_url = serializers.URLField(allow_blank=True, required=False)
 
     """
     shall the ad also be shown on instagram or only on facebook?
@@ -1210,7 +1212,7 @@ class OrderLineFacebookSerializer(serializers.Serializer):
     description of the geographical focus area the ad should be targeted on
 
     """
-    geo_targeting = serializers.CharField(max_length=250, required=False)
+    geo_targeting = serializers.CharField(max_length=250, allow_blank=True, required=False)
 
     """
     what radius (km) around the geographical focus are described in geo_targeting should be targeted?
@@ -1228,14 +1230,14 @@ class OrderLineFacebookSerializer(serializers.Serializer):
     list of detailed targeting criterea
 
     """
-    detailed_targeting = OrderLineFacebookDetailedTargetingSerializer(many=True, required=False)
+    detailed_targeting = OrderLineFacebookDetailedTargetingSerializer(many=True, allow_null=True, required=False)
 
     """
     is this campaign meant for a special event? add some description to help the ad team find the
     right wording and targeting
 
     """
-    special_events_campaign = serializers.CharField(max_length=250, required=False)
+    special_events_campaign = serializers.CharField(max_length=250, allow_blank=True, required=False)
 
     """
     redmine ticket id of the original facebook offer inquiry
@@ -1253,14 +1255,14 @@ class OrderLineInAppSerializer(serializers.Serializer):
     detailed briefing information
 
     """
-    briefing = serializers.CharField(max_length=200, required=False)
+    briefing = serializers.CharField(max_length=200, allow_blank=True, required=False)
 
     """
     what goals should be reached with the advertisement campaign?
     e.g. get new customers, spread word about a product, etc.
 
     """
-    campaign_goal = serializers.CharField(max_length=1000, required=False)
+    campaign_goal = serializers.CharField(max_length=1000, allow_blank=True, required=False)
 
     """
     impressions to be delivered during the whole campaign runtime
@@ -1272,7 +1274,7 @@ class OrderLineInAppSerializer(serializers.Serializer):
     description of the geographical focus area the ad should be targeted on
 
     """
-    geo_targeting = serializers.CharField(max_length=10000, required=False)
+    geo_targeting = serializers.CharField(max_length=10000, allow_blank=True, required=False)
 
     """
     description of the audience the ad should be targeted on
@@ -1297,7 +1299,7 @@ class OrderLineInAppSerializer(serializers.Serializer):
     url of the ads target website if LANDING_PAGE_CUSTOMER is chosen in target_page_type
 
     """
-    target_url = serializers.URLField(required=False)
+    target_url = serializers.URLField(allow_blank=True, required=False)
 
     """
     selection on who will be providing the creatives
@@ -1356,25 +1358,25 @@ class OrderLineListingOpeningHoursSerializer(serializers.Serializer):
     first period begin
 
     """
-    morning_from = serializers.TimeField(required=False)
+    morning_from = serializers.TimeField(allow_null=True, required=False)
 
     """
     first period end
 
     """
-    morning_to = serializers.TimeField(required=False)
+    morning_to = serializers.TimeField(allow_null=True, required=False)
 
     """
     second period begin
 
     """
-    afternoon_from = serializers.TimeField(required=False)
+    afternoon_from = serializers.TimeField(allow_null=True, required=False)
 
     """
     second period end
 
     """
-    afternoon_to = serializers.TimeField(required=False)
+    afternoon_to = serializers.TimeField(allow_null=True, required=False)
 
 
 class OrderLineListingSerializer(serializers.Serializer):
@@ -1386,7 +1388,7 @@ class OrderLineListingSerializer(serializers.Serializer):
     company description
 
     """
-    company_description = serializers.CharField(max_length=255, required=False)
+    company_description = serializers.CharField(max_length=255, allow_blank=True, required=False)
 
     """
     public company email address published in the directories
@@ -1404,27 +1406,27 @@ class OrderLineListingSerializer(serializers.Serializer):
     public company fax number published in the directories
 
     """
-    fax = PhoneNumberField(required=False)
+    fax = PhoneNumberField(allow_null=True, required=False)
 
     """
     company website url published in the directories
 
     """
-    url = serializers.URLField(required=False)
+    url = serializers.URLField(allow_blank=True, required=False)
 
     """
     list of opening hour descriptions for a single day of week each
     each day of week must only be included once, missing days of week will be marked as closed
 
     """
-    opening_hours = OrderLineListingOpeningHoursSerializer(many=True, required=False)
+    opening_hours = OrderLineListingOpeningHoursSerializer(many=True, allow_null=True, required=False)
 
     """
     additional opening hours information that don't match the structured ones
     e.g. open on request, open only during lunar eclipses, etc.
 
     """
-    opening_hours_description = serializers.CharField(max_length=140, required=False)
+    opening_hours_description = serializers.CharField(max_length=140, allow_blank=True, required=False)
 
     """
     list of keywords that will be submitted to directories to classify the company
@@ -1443,7 +1445,7 @@ class OrderLineSeoSerializer(serializers.Serializer):
     which cms is used on the target website?
 
     """
-    cms = serializers.CharField(max_length=50, required=False)
+    cms = serializers.CharField(max_length=50, allow_blank=True, required=False)
 
     """
     count of physical locations the optimization should be deasys for
@@ -1461,13 +1463,13 @@ class OrderLineSeoSerializer(serializers.Serializer):
     url of the target website if LANDING_PAGE_CUSTOMER is chosen in target_page_type
 
     """
-    target_url = serializers.URLField(required=False)
+    target_url = serializers.URLField(allow_blank=True, required=False)
 
     """
     credentials to access the target page if LANDING_PAGE_CUSTOMER is chosen in target_page_type
 
     """
-    target_page_credentials = serializers.CharField(max_length=1000, required=False)
+    target_page_credentials = serializers.CharField(max_length=1000, allow_blank=True, required=False)
 
     """
     topics to optimize for
@@ -1486,25 +1488,25 @@ class OrderLineSeoSerializer(serializers.Serializer):
     main focus of the seo optimization, which of the customers products/services is the most important?
 
     """
-    focus = serializers.CharField(max_length=1000, required=False)
+    focus = serializers.CharField(max_length=1000, allow_blank=True, required=False)
 
     """
     usp describing the customers competitive advantage that should get a focus in the optimization
 
     """
-    usp = serializers.CharField(max_length=1000, required=False)
+    usp = serializers.CharField(max_length=1000, allow_blank=True, required=False)
 
     """
     keywords that the customer prefers to be higher ranked
 
     """
-    keywords = serializers.CharField(max_length=1000, required=False)
+    keywords = serializers.CharField(max_length=1000, allow_blank=True, required=False)
 
     """
     wording style to be used on text optimization
 
     """
-    wording_style = serializers.ChoiceField(choices=SEO_TEXT_STYLE_CHOICES, required=False)
+    wording_style = serializers.ChoiceField(choices=SEO_TEXT_STYLE_CHOICES, allow_null=True, required=False)
 
     """
     redmine ticket id of the original seo offer inquiry
@@ -1549,7 +1551,7 @@ class OrderLineWebsiteSerializer(serializers.Serializer):
     additional info about the domain
 
     """
-    domain_info = serializers.CharField(max_length=100, required=False)
+    domain_info = serializers.CharField(max_length=100, allow_blank=True, required=False)
 
     """
     website briefing about subpages and content
@@ -1561,19 +1563,22 @@ class OrderLineWebsiteSerializer(serializers.Serializer):
     color code to be used when designing the creative (priority 1)
 
     """
-    color_code_1 = serializers.CharField(max_length=7, required=False, validators=[HexColorValidator()])
+    color_code_1 = serializers.CharField(
+        max_length=7, allow_blank=True, required=False, validators=[HexColorValidator()])
 
     """
     color code to be used when designing the creative (priority 2)
 
     """
-    color_code_2 = serializers.CharField(max_length=7, required=False, validators=[HexColorValidator()])
+    color_code_2 = serializers.CharField(
+        max_length=7, allow_blank=True, required=False, validators=[HexColorValidator()])
 
     """
     color code to be used when designing the creative (priority 3)
 
     """
-    color_code_3 = serializers.CharField(max_length=7, required=False, validators=[HexColorValidator()])
+    color_code_3 = serializers.CharField(
+        max_length=7, allow_blank=True, required=False, validators=[HexColorValidator()])
 
     """
     should a new logo be created for the customer?
@@ -1585,50 +1590,50 @@ class OrderLineWebsiteSerializer(serializers.Serializer):
     what kind of logo should be created if logo_creation is set to LOGO_CREATION_NEW
 
     """
-    logo_type = serializers.ChoiceField(choices=LOGO_TYPE_CHOICES, required=False)
+    logo_type = serializers.ChoiceField(choices=LOGO_TYPE_CHOICES, allow_null=True, required=False)
 
     """
     textual description of wishes and requirements for the logo
 
     """
-    logo_description = serializers.CharField(max_length=1000, required=False)
+    logo_description = serializers.CharField(max_length=1000, allow_blank=True, required=False)
 
     """
     website design choice between minimalistic and embellished
 
     """
-    design_preference_minimalistic_embellished = serializers.IntegerField(required=False)
+    design_preference_minimalistic_embellished = serializers.IntegerField(allow_null=True, required=False)
 
     """
     website design choice between modern and classic
 
     """
-    design_preference_modern_classic = serializers.IntegerField(required=False)
+    design_preference_modern_classic = serializers.IntegerField(allow_null=True, required=False)
 
     """
     website design choice between simple and striking
 
     """
-    design_preference_simple_striking = serializers.IntegerField(required=False)
+    design_preference_simple_striking = serializers.IntegerField(allow_null=True, required=False)
 
     """
     website design choice between text and picture
 
     """
-    design_preference_text_picture = serializers.IntegerField(required=False)
+    design_preference_text_picture = serializers.IntegerField(allow_null=True, required=False)
 
     """
     textual description of wishes and requirements for the website design
 
     """
-    design_preferences = serializers.CharField(max_length=1000, required=False)
+    design_preferences = serializers.CharField(max_length=1000, allow_blank=True, required=False)
 
     """
     what goals should be reached with the new website?
     e.g. get new customers, spread word about a product, etc.
 
     """
-    campaign_goal = serializers.CharField(max_length=1000, required=False)
+    campaign_goal = serializers.CharField(max_length=1000, allow_blank=True, required=False)
 
 
 class OrderLineEmailSerializer(serializers.Serializer):
@@ -1696,7 +1701,7 @@ class OrderLineSerializer(serializers.Serializer):
     overall rebate percentage contained in the final prices of the orderline
 
     """
-    rebate_percentage = serializers.DecimalField(decimal_places=2, max_digits=10, required=False)
+    rebate_percentage = serializers.DecimalField(decimal_places=2, max_digits=10, allow_null=True, required=False)
 
     """
     setup fee will be invoiced as soon as the service call has been completed with the customer
@@ -1772,19 +1777,19 @@ class OrderLineSerializer(serializers.Serializer):
     general comment on the order
 
     """
-    comment = serializers.CharField(max_length=300, required=False)
+    comment = serializers.CharField(max_length=300, allow_blank=True, required=False)
 
     """
     customer preferred product start date or definitive start date for fixed runtime products
 
     """
-    start_date = serializers.DateField(required=True)
+    start_date = serializers.DateField(allow_null=True, required=True)
 
     """
     end date for fixed runtime products
 
     """
-    end_date = serializers.DateField(required=False)
+    end_date = serializers.DateField(allow_null=True, required=False)
 
     """
     product type the orderline is meant for, additional detail information must be provided in
@@ -1814,6 +1819,7 @@ class OrderLineSerializer(serializers.Serializer):
     """
     first_cancellation_period = serializers.CharField(max_length=5, validators=[validate_comma_separated_integer_list,
                                                                                 comma_separated_period_validatior],
+                                                      allow_blank=True,
                                                       required=False)
 
     """
@@ -1822,6 +1828,7 @@ class OrderLineSerializer(serializers.Serializer):
     """
     cancellation_period = serializers.CharField(max_length=5, validators=[validate_comma_separated_integer_list,
                                                                           comma_separated_period_validatior],
+                                                allow_blank=True,
                                                 required=False)
 
     """
@@ -1832,6 +1839,7 @@ class OrderLineSerializer(serializers.Serializer):
     # this is a special case for mds customers
     early_cancellation_period = serializers.CharField(max_length=5, validators=[validate_comma_separated_integer_list,
                                                                                 comma_separated_period_validatior],
+                                                      allow_blank=True,
                                                       required=False)
 
     """
@@ -1945,13 +1953,13 @@ class OrderSerializer(serializers.Serializer):
     order revision, defines how often an order has been updated before the customer signed it
 
     """
-    version = serializers.IntegerField(required=False)
+    version = serializers.IntegerField(allow_null=True, required=False)
 
     """
     custom name of the order revision
 
     """
-    version_name = serializers.CharField(max_length=50, required=False)
+    version_name = serializers.CharField(max_length=50, allow_blank=True, required=False)
 
     """
     date of initial offer creation
@@ -1963,19 +1971,19 @@ class OrderSerializer(serializers.Serializer):
     date of offer lock
 
     """
-    date_is_locked = serializers.DateTimeField(required=False)
+    date_is_locked = serializers.DateTimeField(allow_null=True, required=False)
 
     """
     date of last offer modification
 
     """
-    date_last_modified = serializers.DateTimeField(required=False)
+    date_last_modified = serializers.DateTimeField(allow_null=True, required=False)
 
     """
     date of offer sent to the customer
 
     """
-    date_sent_to_customer = serializers.DateTimeField(required=False)
+    date_sent_to_customer = serializers.DateTimeField(allow_null=True, required=False)
 
     """
     date when the customer signed the offer
