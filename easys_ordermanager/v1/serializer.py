@@ -726,7 +726,7 @@ class AccountLocationSerializer(serializers.Serializer):
     is this the primary location of the customer?
 
     """
-    is_primary_location = serializers.BooleanField(allow_null=True, required=False)
+    is_primary_location = serializers.BooleanField(required=False)
 
     """
     plain street name part of billing address
