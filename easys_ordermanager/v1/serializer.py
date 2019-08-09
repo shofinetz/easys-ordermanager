@@ -1710,6 +1710,16 @@ class OrderLineSerializer(serializers.Serializer):
     setup_fee = serializers.DecimalField(decimal_places=2, max_digits=10, required=True)
 
     """
+    postponed setup fee used for fixed-runtime campaigns that will only be invoiced
+    once, three weeks before the product is activated.
+
+    EASYS: InApp banner creation cost
+    EASYS: display banner creation cost if booking_type == BOOKING_TYPE.fixed
+    """
+    # TODO: set required=True when all usages updated
+    postponed_setup_fee = serializers.DecimalField(decimal_places=2, max_digits=10, required=False)
+
+    """
     start fee will be invoiced as soon as the product is activated
     e.g. if website setup cost is splitted 50/50 by setup and start fee
 
