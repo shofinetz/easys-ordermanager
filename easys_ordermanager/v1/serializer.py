@@ -847,6 +847,11 @@ class AccountLocationSerializer(serializers.Serializer):
     """
     payment_debit_account_owner = serializers.CharField(max_length=70, allow_blank=True, required=False)
 
+    """
+    true if customer agree in being used as a reference customer
+    """
+    reference_customer = serializers.BooleanField(default=False)
+
 
 class OrderLineGoogleAdsSerializer(serializers.Serializer):
     """
