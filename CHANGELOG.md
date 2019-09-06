@@ -1,5 +1,9 @@
 # Changelog
 
+
+## 1.1.1 (2019-09-06)
+Small fix on pep8 error
+
 ## 1.1.0 (2019-09-04)
 
 This release contains backwards incompatible changes
