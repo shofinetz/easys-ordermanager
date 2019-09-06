@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.core.validators import validate_comma_separated_integer_list
 from django.utils.translation import ugettext_lazy as _, pgettext_lazy
 from django_countries.serializer_fields import CountryField
@@ -6,8 +8,8 @@ from internationalflavor.vat_number import VATNumberValidator
 from model_utils.choices import Choices
 from rest_framework import serializers
 
-from easys_ordermanager.validators import comma_separated_period_validatior, DomainNameValidator, HexColorValidator
 from easys_ordermanager.fields import PhoneNumberField
+from easys_ordermanager.validators import comma_separated_period_validatior, DomainNameValidator, HexColorValidator
 
 PAYMENT_METHOD_TRANSFER = 1
 PAYMENT_METHOD_CHARGE = 2
@@ -267,6 +269,27 @@ DISPLAY_TYPE_MOBILE_ONLY = 2
 DISPLAY_TYPE_CHOICES = Choices(
     (DISPLAY_TYPE_WEB_MOBILE, 'web_and_mobile', _('Web and mobile display advertisement')),
     (DISPLAY_TYPE_MOBILE_ONLY, 'mobile_only', _('Mobile only display advertisement')),
+)
+
+DISPLAY_BANNER_COLOR_SELECT_WEBSITE = 1
+DISPLAY_BANNER_COLOR_SELECT_PICKER = 2
+DISPLAY_BANNER_COLOR_SELECTION_CHOICES = Choices(
+    (DISPLAY_BANNER_COLOR_SELECT_WEBSITE, 'website', _('Color from Logo/Website')),
+    (DISPLAY_BANNER_COLOR_SELECT_PICKER, 'color_picker', _('Set color'))
+)
+
+DISPLAY_IMPRESSIONS_PER_MONTH_20 = 20000
+DISPLAY_IMPRESSIONS_PER_MONTH_40 = 40000
+DISPLAY_IMPRESSIONS_PER_MONTH_80 = 80000
+DISPLAY_IMPRESSIONS_PER_MONTH_CHOICES = Choices(
+    (DISPLAY_IMPRESSIONS_PER_MONTH_20, 'impressions_20', _('20.000 Impressions')),
+    (DISPLAY_IMPRESSIONS_PER_MONTH_40, 'impressions_40', _('40.000 Impressions')),
+    (DISPLAY_IMPRESSIONS_PER_MONTH_80, 'impressions_80', _('80.000 Impressions'))
+)
+
+DISPLAY_BASIC_CREATIVE_OPTION_CHOICES = Choices(
+    (CREATIVE_OPTION_CUSTOMER, 'customer', _('Customer provided')),
+    (CREATIVE_OPTION_CREATE_ANIMATED, 'create_animated', _('Create animated')),
 )
 
 DISPLAY_CREATIVES_FORMAT_ADBUNDLE_MOBILE_399 = 1
@@ -853,116 +876,119 @@ class AccountLocationSerializer(serializers.Serializer):
     reference_customer = serializers.BooleanField(default=False)
 
 
-class OrderLineGoogleAdsSerializer(serializers.Serializer):
+class OrderLineGoogleAdsBasicSerializer(serializers.Serializer):
     """
-    detailed specifications and briefing information for a google ads product
+    detailed specifications and briefing information for a google ads basic product - "google_basic" product subtype
     """
-
-    """
-    call to action text, e.g. "Need help? Call us now"
-
-    """
-    call_to_action = serializers.CharField(max_length=200, allow_blank=True, required=False)
 
     """
     what goals should be reached with the advertisement campaign?
     e.g. get new customers, spread word about a product, etc.
-
     """
     campaign_goal = serializers.CharField(max_length=200, allow_blank=True, required=False)
 
     """
     which cities/regions should the ad be targeted on?
-
     """
     regions = serializers.ListField(child=serializers.CharField(max_length=100, required=True), required=True)
 
     """
     the expected impression share when the campaign budget is initially calculated
-
     """
     expected_impression_share = serializers.DecimalField(
         decimal_places=2, max_digits=4, allow_null=True, required=False)
 
     """
     the expected impressions when the campaign budget is initially calculated
-
     """
     expected_impressions = serializers.CharField(max_length=50, allow_blank=True, required=False)
 
     """
-    the expected clicks when the campaign budget is initially calculated
-
-    """
-    expected_clicks = serializers.IntegerField(required=True)
-
-    """
-    the expected conversions when the campaign budget is initially calculated
-
-    """
-    expected_conversions = serializers.IntegerField(required=True)
-
-    """
-    does the customer already have a google ads account that we should take over and optimize, provide the account id
-
-    """
-    existing_account_id = serializers.CharField(max_length=10, allow_blank=True, required=False)
-
-    """
-    does the customer want to have a remarketing campaign included?
-
-    """
-    include_remarketing = serializers.BooleanField(required=False)
-
-    """
     customer preferred keywords to be found on with his campaign
-
     """
     keywords = serializers.ListField(child=serializers.CharField(max_length=100, required=True), required=True)
 
     """
     list of keywords that resulted in zero search volume on campaign calculation
     these keywords will not be guaranteed to be included in the campaign
-
     """
     keywords_with_zero_search_volume = serializers.ListField(child=serializers.CharField(max_length=100, required=True),
                                                              required=True)
 
     """
     definition of the target group this google ads campaign should be focused on
+    """
+    target_audience = serializers.CharField(max_length=1000, required=True)
 
+
+class OrderLineGoogleAdsPremiumSerializer(serializers.Serializer):
+    """
+    detailed specifications and briefing information for a google ads premium product - "adwords" product subtype
+    """
+
+    """
+    call to action text, e.g. "Need help? Call us now"
+    """
+    call_to_action = serializers.CharField(max_length=200, allow_blank=True, required=False)
+
+    """
+    what goals should be reached with the advertisement campaign?
+    e.g. get new customers, spread word about a product, etc.
+    """
+    campaign_goal = serializers.CharField(max_length=200, allow_blank=True, required=False)
+
+    """
+    which cities/regions should the ad be targeted on?
+    """
+    regions = serializers.ListField(child=serializers.CharField(max_length=100, required=True), required=True)
+
+    """
+    the expected clicks when the campaign budget is initially calculated
+    """
+    expected_clicks = serializers.IntegerField(required=True)
+
+    """
+    the expected conversions when the campaign budget is initially calculated
+    """
+    expected_conversions = serializers.IntegerField(required=True)
+
+    """
+    does the customer already have a google ads account that we should take over and optimize, provide the account id
+    """
+    existing_account_id = serializers.CharField(max_length=10, allow_blank=True, required=False)
+
+    """
+    does the customer want to have a remarketing campaign included?
+    """
+    include_remarketing = serializers.BooleanField(required=False)
+
+    """
+    customer preferred keywords to be found on with his campaign
+    """
+    keywords = serializers.ListField(child=serializers.CharField(max_length=100, required=True), required=True)
+
+    """
+    list of keywords that resulted in zero search volume on campaign calculation
+    these keywords will not be guaranteed to be included in the campaign
+    """
+    keywords_with_zero_search_volume = serializers.ListField(child=serializers.CharField(max_length=100, required=True),
+                                                             required=True)
+
+    """
+    definition of the target group this google ads campaign should be focused on
     """
     target_audience = serializers.CharField(max_length=1000, required=True)
 
     """
     usp describing the customers competitive advantage that should get a focus in the campaign texts
-
     """
     usp = serializers.CharField(max_length=1000, required=True)
 
 
-class OrderLineDisplaySerializer(serializers.Serializer):
+class OrderLineDisplayBasicSerializer(serializers.Serializer):
     """
-    detailed specifications and briefing information for a display product
+    detailed specifications and briefing information for a display basic product - "display_web_continuous_rif" subtype
     """
-
-    """
-    campaign type, fixed runtime or continuous advertisement
-
-    """
-    booking_type = serializers.ChoiceField(choices=BOOKING_TYPE_CHOICES, required=True)
-
-    """
-    which devices should this campaign be run on, web+mobile or mobile only?
-
-    """
-    target_devices = serializers.ChoiceField(choices=DISPLAY_TYPE_CHOICES, required=True)
-
-    """
-    expected formats of the creative used in the campaign, some formats will incur an additional fee
-
-    """
-    creatives_format = serializers.ChoiceField(choices=DISPLAY_CREATIVES_FORMAT_CHOICES, required=True)
 
     """
     impressions per month, used by basic (20000/40000/80000/etc impressions) or continuous premium product
@@ -971,25 +997,8 @@ class OrderLineDisplaySerializer(serializers.Serializer):
         products.product_type
         order_line_online_details.banner_booking_type
     """
-    impressions_per_month = serializers.IntegerField(allow_null=True, required=False)
-
-    """
-    impressions per day, used for fixed runtime premium product
-
-    """
-    impressions_per_day = serializers.IntegerField(allow_null=True, required=False)
-
-    """
-    age range selection the ad should be targeted on
-
-    """
-    age_targeting = serializers.MultipleChoiceField(choices=DISPLAY_AGE_CHOICES, allow_empty=True, required=True)
-
-    """
-    gender selection the ad should be targeted on
-
-    """
-    gender_targeting = serializers.ChoiceField(choices=DISPLAY_GENDER_CHOICES, allow_null=True, required=False)
+    impressions_per_month = serializers.ChoiceField(choices=DISPLAY_IMPRESSIONS_PER_MONTH_CHOICES,
+                                                    required=False, allow_null=True)
 
     """
     list of german zip codes used for geographical targeting
@@ -1001,59 +1010,44 @@ class OrderLineDisplaySerializer(serializers.Serializer):
                                           allow_empty=True, required=True)
 
     """
-    list of channel names the ad will be targeted on
-
-    """
-    channel_targeting = serializers.MultipleChoiceField(
-        choices=DISPLAY_CHANNEL_CHOICES, required=True, allow_empty=True)
-
-    """
-    list of interests the ad will be targeted on
-
-    """
-    interest_targeting = serializers.MultipleChoiceField(
-        choices=DISPLAY_TARGETING_CHOICES, required=False, allow_empty=True)
-
-    """
     what goals should be reached with the advertisement campaign?
     e.g. get new customers, spread word about a product, etc.
-
     """
     campaign_goal = serializers.CharField(max_length=1000, allow_blank=True, required=False)
 
     """
     headline text that will be shown on the creative
-
     """
     headline = serializers.CharField(max_length=40, required=True)
 
     """
     sub-headline text that will be shown on the creative
-
     """
     sub_headline = serializers.CharField(max_length=40, required=True)
 
     """
     list of bullet point texts that will be shown on the creative
-
     """
     bullet_points = serializers.ListField(child=serializers.CharField(max_length=100), required=True)
 
     """
     call to action text that will be shown on the creative
-
     """
     call_to_action = serializers.CharField(max_length=18, required=True)
 
     """
-    color code to be used when designing the creative (priority 1)
+    choice for the type of banner color selection: from website or color picker for e.g. color_code_1
+    """
+    banner_color_selection = serializers.ChoiceField(choices=DISPLAY_BANNER_COLOR_SELECTION_CHOICES,
+                                                     required=False, allow_blank=True)
 
+    """
+    color code to be used when designing the creative (priority 1)
     """
     color_code_1 = serializers.CharField(max_length=7, allow_blank=True, required=False)
 
     """
     color code to be used when designing the creative (priority 2)
-
     """
     color_code_2 = serializers.CharField(max_length=7, allow_blank=True, required=False)
 
@@ -1065,19 +1059,16 @@ class OrderLineDisplaySerializer(serializers.Serializer):
 
     """
     does the customer allow usage of stock images?
-
     """
     stock_images_allowed = serializers.BooleanField(required=True)
 
     """
     chose which type of target page should be used in the ad? new or existing website
-
     """
     target_page_type = serializers.ChoiceField(choices=LANDING_PAGE_CHOICES, required=True)
 
     """
     url of the ads target website if LANDING_PAGE_CUSTOMER is chosen in target_page_type
-
     """
     target_url = serializers.URLField(allow_blank=True, required=False)
 
@@ -1094,6 +1085,98 @@ class OrderLineDisplaySerializer(serializers.Serializer):
     EASYS: order_line_online_details.banner_location_frame
     """
     location_frame_text = serializers.CharField(max_length=50, allow_blank=True, required=False)
+
+    """
+    will the customer provide creatives or do we have to create new ones?
+    if new ones must be created, chose which type
+
+    EASYS: order_line_online_details.banner_option
+    HC: ProductDisplay.premium_for_html5 (true if CREATIVE_OPTION_CREATE_ANIMATED, false otherwise)
+    """
+    creative_options = serializers.ChoiceField(choices=DISPLAY_BASIC_CREATIVE_OPTION_CHOICES, required=True)
+
+
+class OrderLineDisplayPremiumSerializer(serializers.Serializer):
+    """
+    detailed specifications and briefing information for a display premium product
+    - any of the display web/mobile fix/continuous subtypes
+    """
+
+    """
+    campaign type, fixed runtime or continuous advertisement
+    """
+    booking_type = serializers.ChoiceField(choices=BOOKING_TYPE_CHOICES, required=True)
+
+    """
+    which devices should this campaign be run on, web+mobile or mobile only?
+    """
+    target_devices = serializers.ChoiceField(choices=DISPLAY_TYPE_CHOICES, required=True)
+
+    """
+    expected formats of the creative used in the campaign, some formats will incur an additional fee
+    """
+    creatives_format = serializers.ChoiceField(choices=DISPLAY_CREATIVES_FORMAT_CHOICES, required=True)
+
+    """
+    impressions per day, used for fixed runtime premium product
+    """
+    impressions_per_day = serializers.IntegerField(allow_null=True, required=False)
+
+    """
+    impressions per month, used by basic (20000/40000/80000/etc impressions) or continuous premium product
+
+        Please also provide field values for
+        products.product_type
+        order_line_online_details.banner_booking_type
+    """
+    impressions_per_month = serializers.IntegerField(allow_null=True, required=False)
+
+    """
+    age range selection the ad should be targeted on
+    """
+    age_targeting = serializers.MultipleChoiceField(choices=DISPLAY_AGE_CHOICES, allow_empty=True, required=True)
+
+    """
+    gender selection the ad should be targeted on
+    """
+    gender_targeting = serializers.ChoiceField(choices=DISPLAY_GENDER_CHOICES, allow_blank=True, required=False)
+
+    """
+    list of german zip codes used for geographical targeting
+    RH: must be converted to our geo targeting format
+
+    HC: the zip code list must be converted to our targeting json format
+    """
+    geo_targeting = serializers.ListField(child=serializers.CharField(max_length=10, required=True),
+                                          allow_empty=True, required=True)
+
+    """
+    list of channel names the ad will be targeted on
+    """
+    channel_targeting = serializers.MultipleChoiceField(
+        choices=DISPLAY_CHANNEL_CHOICES, required=True, allow_empty=True)
+
+    """
+    list of interests the ad will be targeted on
+    """
+    interest_targeting = serializers.MultipleChoiceField(
+        choices=DISPLAY_TARGETING_CHOICES, required=False, allow_empty=True)
+
+    """
+    what goals should be reached with the advertisement campaign?
+    e.g. get new customers, spread word about a product, etc.
+    """
+    campaign_goal = serializers.CharField(max_length=1000, allow_blank=True, required=False)
+
+    """
+    chose which type of target page should be used in the ad? new or existing website
+    """
+    target_page_type = serializers.ChoiceField(choices=LANDING_PAGE_CHOICES, required=True)
+
+    """
+    url of the ads target website if LANDING_PAGE_CUSTOMER is chosen in target_page_type
+    """
+    target_url = serializers.URLField(allow_blank=True, required=False)
 
     """
     will the customer provide creatives or do we have to create new ones?
@@ -1718,7 +1801,7 @@ class OrderLineSerializer(serializers.Serializer):
     EASYS: facebook setup cost if facebook page is created by provider @dominikus
 
     """
-    setup_fee = serializers.DecimalField(decimal_places=2, max_digits=10, required=True)
+    setup_fee = serializers.DecimalField(decimal_places=2, max_digits=10, required=False)
 
     """
     postponed setup fee used for fixed-runtime campaigns that will only be invoiced
@@ -1737,7 +1820,7 @@ class OrderLineSerializer(serializers.Serializer):
     EASYS: orderline_online_details.web_site_pricing_logo (50%, rest is setup_fee)
     EASYS: orderline_online_details.web_site_pricing_web_sites (50%, rest is setup_fee)
     """
-    start_fee = serializers.DecimalField(decimal_places=2, max_digits=10, required=True)
+    start_fee = serializers.DecimalField(decimal_places=2, max_digits=10, required=False)
 
     """
     gross advertisement budget will be invoiced on a monthly basis
@@ -1748,7 +1831,7 @@ class OrderLineSerializer(serializers.Serializer):
         (OrderLineFacebookSerializer.booking_type == BOOKING_TYPE_CONTINUOUS)
 
     """
-    budget = serializers.DecimalField(decimal_places=2, max_digits=10, required=True)
+    budget = serializers.DecimalField(decimal_places=2, max_digits=10, required=False)
 
     """
     operational costs that will be invoiced on a monthly basis
@@ -1757,7 +1840,7 @@ class OrderLineSerializer(serializers.Serializer):
     EASYS: orderline_online_details.adwords_pricing_call_tracking
 
     """
-    fee = serializers.DecimalField(decimal_places=2, max_digits=10, required=True)
+    fee = serializers.DecimalField(decimal_places=2, max_digits=10, required=False)
 
     """
     gross one-off advertisement budget used for fixed runtime campaigns that will only be invoiced once
@@ -1767,20 +1850,20 @@ class OrderLineSerializer(serializers.Serializer):
         (OrderLineFacebookSerializer.booking_type == BOOKING_TYPE_FIXED)
 
     """
-    one_time_budget = serializers.DecimalField(decimal_places=2, max_digits=10, required=True)
+    one_time_budget = serializers.DecimalField(decimal_places=2, max_digits=10, required=False)
 
     """
     agency commission percentage to calculate net budget from gross budget
 
     """
-    commission = serializers.DecimalField(decimal_places=2, max_digits=5, required=True)
+    commission = serializers.DecimalField(decimal_places=2, max_digits=5, required=False)
 
     """
     overall sum of deferred payment that will be sent as one invoice to the customer but can be payed over
     several months, see deferred_payment_months
 
     """
-    deferred_payment_sum = serializers.DecimalField(decimal_places=2, max_digits=10, required=True)
+    deferred_payment_sum = serializers.DecimalField(decimal_places=2, max_digits=10, required=False)
 
     """
     duration of the deferred payment in months, the monthly costs are calculated as
@@ -1859,16 +1942,27 @@ class OrderLineSerializer(serializers.Serializer):
                                                       required=False)
 
     """
-    sub-serializer for google ads specific product data
+    sub-serializer for google ads basic specific product data ("google_basic" product subtype)
     one detail dataset per order item, can be skipped if this detail is not meant for the item's product type
     """
-    detail_google_ads = OrderLineGoogleAdsSerializer(required=False)
+    detail_google_ads_basic = OrderLineGoogleAdsBasicSerializer(required=False)
+    """
+    sub-serializer for google ads premium specific product data
+    one detail dataset per order item, can be skipped if this detail is not meant for the item's product type
+    """
+    detail_google_ads_premium = OrderLineGoogleAdsPremiumSerializer(required=False)
 
     """
-    sub-serializer for display specific product data
+    sub-serializer for display basic specific product data
     one detail dataset per order item, can be skipped if this detail is not meant for the item's product type
     """
-    detail_display = OrderLineDisplaySerializer(required=False)
+    detail_display_basic = OrderLineDisplayBasicSerializer(required=False)
+
+    """
+    sub-serializer for display premium specific product data
+    one detail dataset per order item, can be skipped if this detail is not meant for the item's product type
+    """
+    detail_display_premium = OrderLineDisplayPremiumSerializer(required=False)
 
     """
     sub-serializer for facebook specific product data
@@ -2062,9 +2156,17 @@ class Serializer(serializers.Serializer):
         self.validate_easys_ids(data=data)
         self.validate_seller_shares(data=data)
         self.validate_productdetail_exists(data=data)
+        self.validate_productfee_commissions(data=data)
         self.validate_deferred_payments(data=data)
         # return verified data
         return data
+
+    def validate_productfee_commissions(self, data):
+        for orderline in data['orderlines']:
+            if orderline['product_type'] in [PRODUCT_TYPE_GOOGLE_ADS] and \
+                orderline['product_level'] in [PRODUCT_LEVEL_BASIC]:
+                if orderline.get('commission') != Decimal('40'):
+                    raise serializers.ValidationError('Commission value for this product is fixed to 40')
 
     def validate_deferred_payments(self, data):
         for order_line in data['orderlines']:
@@ -2084,22 +2186,23 @@ class Serializer(serializers.Serializer):
                         order['easys_id'], sellershare_sum))
 
     def validate_productdetail_exists(self, data):
-        mapping = dict(
-            PRODUCT_TYPE_GOOGLE_ADS='detail_google_ads',
-            PRODUCT_TYPE_DISPLAY='detail_display',
-            PRODUCT_TYPE_FACEBOOK='detail_facebook',
-            PRODUCT_TYPE_IN_APP='detail_inapp',
-            PRODUCT_TYPE_LISTING='detail_listing',
-            PRODUCT_TYPE_SEO='detail_seo',
-            PRODUCT_TYPE_WEBSITE='detail_website',
-            PRODUCT_TYPE_CUSTOMER_WEBSITE='detail_customer_website',
-            PRODUCT_TYPE_EMAIL='detail_email',
-        )
+        mapping = {
+            PRODUCT_TYPE_GOOGLE_ADS: {'detail_google_ads_basic', 'detail_google_ads_premium'},
+            PRODUCT_TYPE_DISPLAY: {'detail_display_basic', 'detail_display_premium'},
+            PRODUCT_TYPE_FACEBOOK: {'detail_facebook'},
+            PRODUCT_TYPE_IN_APP: {'detail_inapp'},
+            PRODUCT_TYPE_LISTING: {'detail_listing'},
+            PRODUCT_TYPE_SEO: {'detail_seo'},
+            PRODUCT_TYPE_WEBSITE: {'detail_website'},
+            PRODUCT_TYPE_CUSTOMER_WEBSITE: {'detail_customer_website'},
+            PRODUCT_TYPE_EMAIL: {'detail_email'},
+        }
+
         for orderline in data['orderlines']:
             if orderline['product_type'] in mapping:
-                if mapping[orderline['product_type']] not in orderline:
+                if not mapping[orderline['product_type']].intersection(orderline.keys()):
                     raise serializers.ValidationError('orderline {} is missing the product detail data'.format(
-                        orderline['one_id']))
+                        orderline['easys_id']))
 
     def validate_easys_ids(self, data):
         # get ids to validate against

@@ -292,6 +292,21 @@ msgstr "Web und mobile Bannerwerbung"
 msgid "Mobile only display advertisement"
 msgstr "Mobile Bannerwerbung"
 
+msgid "Color from Logo/Website"
+msgstr "Farbe von Logo/Website"
+
+msgid "Set color"
+msgstr "Farbe festlegen"
+
+msgid "20.000 Impressions"
+msgstr "20.000 Impressionen"
+
+msgid "40.000 Impressions"
+msgstr "40.000 Impressionen"
+
+msgid "80.000 Impressions"
+msgstr "80.000 Impressionen"
+
 #, python-format
 msgid ""
 "AdBundle + Mobile Banner (includes the following formats: 160x600, 300x250, "

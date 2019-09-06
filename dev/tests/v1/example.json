@@ -87,32 +87,28 @@
         }]
     }],
     "orderlines": [{
-        "easys_id": 98293,
+        "easys_id": 982930,
         "easys_order_id": 84274,
         "easys_account_location_id": 18736,
         "rebate_percentage": 5,
         "setup_fee": 399,
-        "start_fee": 0,
         "budget": 1500,
         "fee": 99,
-        "one_time_budget": 0,
         "commission": 40,
         "deferred_payment_sum": 0,
         "deferred_payment_months": null,
-        "comment": "Make people believe in my wall",
+        "comment": "Make premium people believe in my wall",
         "start_date": "2019-04-01",
         "end_date": "2025-03-31",
         "product_type": 1,
         "product_level": 2,
         "initial_term_months": 6,
-        "detail_google_ads": {
+        "detail_google_ads_premium": {
             "call_to_action": "Vote for the wall!",
             "campaign_goal": "Get approval for my wall",
             "regions": [
                 "Texas", "New Mexico"
             ],
-            "expected_impression_share": 80,
-            "expected_impressions": "Over 9000",
             "expected_clicks": 500,
             "expected_conversions": 92,
             "has_quality_measures": true,
@@ -127,25 +123,89 @@
             "usp": "Best wall you've ever seen"
         }
     },{
-        "easys_id": 982456,
+        "easys_id": 982931,
+        "easys_order_id": 84274,
+        "easys_account_location_id": 18736,
+        "rebate_percentage": 5,
+        "budget": 1500,
+        "commission": 40,
+        "deferred_payment_sum": 0,
+        "deferred_payment_months": null,
+        "comment": "Make basic people believe in my wall",
+        "start_date": "2019-04-01",
+        "end_date": "2025-03-31",
+        "product_type": 1,
+        "product_level": 1,
+        "initial_term_months": 6,
+        "detail_google_ads_basic": {
+            "campaign_goal": "Get approval for my wall",
+            "regions": [
+                "Texas", "New Mexico"
+            ],
+            "expected_impression_share": 80,
+            "expected_impressions": "Over 9000",
+            "has_quality_measures": true,
+            "keywords": [
+                "maga", "wall", "borderwall", "stupid"
+            ],
+            "keywords_with_zero_search_volume": [
+                "best president ever", "smart guy"
+            ],
+            "target_audience": "Crazy stupid rednecks"
+        }
+    },{
+        "easys_id": 9824560,
+        "easys_order_id": 84274,
+        "easys_account_location_id": 18736,
+        "rebate_percentage": 5,
+        "budget": 1500,
+        "deferred_payment_sum": 0,
+        "deferred_payment_months": null,
+        "comment": "The great basic wall display",
+        "start_date": "2019-04-01",
+        "end_date": "2025-03-31",
+        "product_type": 2,
+        "product_level": 1,
+        "initial_term_months": 6,
+        "detail_display_basic": {
+            "impressions_per_month": 20000,
+            "geo_targeting": [
+                "70178",
+                "73728"
+            ],
+            "campaign_goal": "Make more stupid people pay for the Wall",
+            "headline": "Headlines",
+            "sub_headline": "sub headline",
+            "bullet_points": ["bullet pt 1", "bullet pt 2"],
+            "call_to_action": "call_to_action",
+            "banner_color_selection": 2,
+            "color_code_1": "#FF0000",
+            "color_code_2": "#FF0000",
+            "color_code_3": "#FF0000",
+            "stock_images_allowed": true,
+            "target_page_type": 1,
+            "target_url": "https://regiohelden.de",
+            "package_template": 0,
+            "location_frame_text": "location_frame_text",
+            "creative_options": 1
+        }
+    }, {
+        "easys_id": 9824561,
         "easys_order_id": 84274,
         "easys_account_location_id": 18736,
         "rebate_percentage": 5,
         "setup_fee": 100,
-        "start_fee": 0,
         "budget": 1500,
-        "fee": 99,
         "one_time_budget": 0,
-        "commission": 40,
         "deferred_payment_sum": 0,
         "deferred_payment_months": null,
-        "comment": "The great wall display",
+        "comment": "The great premium wall display",
         "start_date": "2019-04-01",
         "end_date": "2025-03-31",
         "product_type": 2,
         "product_level": 2,
         "initial_term_months": 6,
-        "detail_display": {
+        "detail_display_premium": {
             "booking_type": 2,
             "target_devices": 1,
             "creatives_format": 6,
@@ -164,18 +224,8 @@
                 2, 3, 4, 5
             ],
             "campaign_goal": "Make more stupid people pay for the Wall",
-            "headline": "Headlines",
-            "sub_headline": "sub headline",
-            "bullet_points": ["bullet pt 1", "bullet pt 2"],
-            "call_to_action": "call_to_action",
-            "color_code_1": "#FF0000",
-            "color_code_2": "#FF0000",
-            "color_code_3": "#FF0000",
-            "stock_images_allowed": true,
             "target_page_type": 1,
             "target_url": "https://regiohelden.de",
-            "package_template": 0,
-            "location_frame_text": "location_frame_text",
             "creative_options": 1
         }
     }, {
@@ -236,7 +286,7 @@
         "start_date": "2019-04-01",
         "end_date": "2019-07-31",
         "product_type": 3,
-        "product_level": 2,
+        "product_level": 1,
         "initial_term_months": 6,
         "detail_inapp": {
             "briefing": "Brief briefing",
@@ -372,7 +422,7 @@
         "start_date": "2019-04-01",
         "end_date": "2020-04-01",
         "product_type": 4,
-        "product_level": 2,
+        "product_level": 1,
         "initial_term_months": 6,
         "detail_seo": {
             "cms": "Joomla",
@@ -400,7 +450,6 @@
         "easys_order_id": 84274,
         "easys_account_location_id": 18736,
         "rebate_percentage": 5,
-        "setup_fee": 50,
         "start_fee": 0,
         "budget": 0,
         "fee": 100,
@@ -412,28 +461,11 @@
         "start_date": "2019-04-01",
         "end_date": "2020-04-01",
         "product_type": 8,
-        "product_level": 2,
+        "product_level": 1,
         "initial_term_months": 6,
         "detail_customer_website": {
             "url": "https://great-wall.us"
         }
-    },{
-        "easys_id": 982293,
-        "easys_order_id": 84274,
-        "easys_account_location_id": 18736,
-        "rebate_percentage": 0,
-        "setup_fee": 0,
-        "start_fee": 0,
-        "budget": 0,
-        "fee": 19,
-        "one_time_budget": 0,
-        "commission": 0,
-        "deferred_payment_sum": 0,
-        "deferred_payment_months": null,
-        "start_date": "2019-04-01",
-        "product_type": 10,
-        "product_level": null,
-        "initial_term_months": 6
     }, {
         "easys_id": 918293,
         "easys_order_id": 84274,
