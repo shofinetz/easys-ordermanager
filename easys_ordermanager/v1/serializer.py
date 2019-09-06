@@ -2164,7 +2164,7 @@ class Serializer(serializers.Serializer):
     def validate_productfee_commissions(self, data):
         for orderline in data['orderlines']:
             if orderline['product_type'] in [PRODUCT_TYPE_GOOGLE_ADS] and \
-                orderline['product_level'] in [PRODUCT_LEVEL_BASIC]:
+                    orderline['product_level'] in [PRODUCT_LEVEL_BASIC]:
                 if orderline.get('commission') != Decimal('40'):
                     raise serializers.ValidationError('Commission value for this product is fixed to 40')
 
