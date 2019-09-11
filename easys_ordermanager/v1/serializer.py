@@ -896,7 +896,7 @@ class OrderLineGoogleAdsBasicSerializer(serializers.Serializer):
     the expected impression share when the campaign budget is initially calculated
     """
     expected_impression_share = serializers.DecimalField(
-        decimal_places=2, max_digits=4, allow_null=True, required=False)
+        decimal_places=2, max_digits=5, allow_null=True, required=False)
 
     """
     the expected impressions when the campaign budget is initially calculated
