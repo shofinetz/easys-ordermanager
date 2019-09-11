@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.1.3 (2019-09-11)
+Clean README file.
+
 
 ## 1.1.2 (2019-09-11)
 Fix expected_impression_share field of OrderLineGoogleAdsBasicSerializer to accept 5 digits in order to validate value 100.00
