@@ -29,7 +29,7 @@ def requirements():
 setup(
     name=easys_ordermanager.__title__,
     packages=find_packages(),
-    version='1.1.2',
+    version='1.1.3',
     description=easys_ordermanager.__description__,
     author=easys_ordermanager.__author__,
     author_email=easys_ordermanager.__author_email__,
