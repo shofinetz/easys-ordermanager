@@ -995,9 +995,10 @@ class OrderLineGoogleAdsPremiumSerializer(serializers.Serializer):
     usp = serializers.CharField(max_length=1000, required=True)
 
     """
-    specified if call tracking numbers should be booked or not. 
-    This is True in case if customer has campaign tracking booked for Stroer Website. 
-    In case of campaign tracking for customer Website than a separated detail_customer_website order has to be provided.
+    specifies if campaign will be tracked or not.
+    This is true in case if customer has campaign tracking booked for Stroer Website.
+    If campaign tracking for customer Website than field is false and new detail_customer_website order has to be added.
+    RH: must book an additional call tracking number
     """
     call_tracking = serializers.BooleanField(required=True)
 
