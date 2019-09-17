@@ -292,6 +292,14 @@ msgstr "Web und mobile Bannerwerbung"
 msgid "Mobile only display advertisement"
 msgstr "Mobile Bannerwerbung"
 
+#, fuzzy
+#| msgid "Ask customer"
+msgid "From customer"
+msgstr "Mit Kunden sprechen"
+
+msgid "Regiohelden photos"
+msgstr ""
+
 msgid "Color from Logo/Website"
 msgstr "Farbe von Logo/Website"
 

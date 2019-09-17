@@ -113,6 +113,7 @@
             "expected_conversions": 92,
             "has_quality_measures": true,
             "include_remarketing": true,
+            "call_tracking": false,
             "keywords": [
                 "maga", "wall", "borderwall", "stupid"
             ],
@@ -169,10 +170,8 @@
         "initial_term_months": 6,
         "detail_display_basic": {
             "impressions_per_month": 20000,
-            "geo_targeting": [
-                "70178",
-                "73728"
-            ],
+            "geo_targeting_zip": "70178",
+            "geo_targeting_radius": 5,
             "campaign_goal": "Make more stupid people pay for the Wall",
             "headline": "Headlines",
             "sub_headline": "sub headline",
@@ -182,7 +181,7 @@
             "color_code_1": "#FF0000",
             "color_code_2": "#FF0000",
             "color_code_3": "#FF0000",
-            "stock_images_allowed": true,
+            "banner_image_selection": 0,
             "target_page_type": 1,
             "target_url": "https://regiohelden.de",
             "package_template": 0,

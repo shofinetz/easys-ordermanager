@@ -271,6 +271,16 @@ DISPLAY_TYPE_CHOICES = Choices(
     (DISPLAY_TYPE_MOBILE_ONLY, 'mobile_only', _('Mobile only display advertisement')),
 )
 
+DISPLAY_BANNER_IMAGE_SOURCE_WEBSITE = 0
+DISPLAY_BANNER_IMAGE_SOURCE_CUSTOMER = 1
+DISPLAY_BANNER_IMAGE_SOURCE_REGIOHELDEN = 2
+
+DISPLAY_BANNER_IMAGE_SOURCE_CHOICES = Choices(
+    (DISPLAY_BANNER_IMAGE_SOURCE_WEBSITE, 'website', _('From website')),
+    (DISPLAY_BANNER_IMAGE_SOURCE_CUSTOMER, 'customer', _('From customer')),
+    (DISPLAY_BANNER_IMAGE_SOURCE_REGIOHELDEN, 'regiohelden', _('Regiohelden photos')),
+)
+
 DISPLAY_BANNER_COLOR_SELECT_WEBSITE = 1
 DISPLAY_BANNER_COLOR_SELECT_PICKER = 2
 DISPLAY_BANNER_COLOR_SELECTION_CHOICES = Choices(
@@ -984,6 +994,13 @@ class OrderLineGoogleAdsPremiumSerializer(serializers.Serializer):
     """
     usp = serializers.CharField(max_length=1000, required=True)
 
+    """
+    specified if call tracking numbers should be booked or not. 
+    This is True in case if customer has campaign tracking booked for Stroer Website. 
+    In case of campaign tracking for customer Website than a separated detail_customer_website order has to be provided.
+    """
+    call_tracking = serializers.BooleanField(required=True)
+
 
 class OrderLineDisplayBasicSerializer(serializers.Serializer):
     """
@@ -1001,13 +1018,17 @@ class OrderLineDisplayBasicSerializer(serializers.Serializer):
                                                     required=False, allow_null=True)
 
     """
-    list of german zip codes used for geographical targeting
+    german zip codes used for geographical targeting
     RH: must be converted to our geo targeting format
 
-    HC: the zip code list must be converted to our targeting json format
+    HC: the zip code together with geo_targeting_radius must be converted to our targeting json format
     """
-    geo_targeting = serializers.ListField(child=serializers.CharField(max_length=10, required=True),
-                                          allow_empty=True, required=True)
+    geo_targeting_zip = serializers.CharField(max_length=5, required=False, allow_blank=True)
+
+    """
+    what radius (km) around the geographical focus are described in geo_targeting should be targeted?
+    """
+    geo_targeting_radius = serializers.IntegerField(min_value=1, max_value=80, required=False)
 
     """
     what goals should be reached with the advertisement campaign?
@@ -1058,14 +1079,14 @@ class OrderLineDisplayBasicSerializer(serializers.Serializer):
     color_code_3 = serializers.CharField(max_length=7, allow_blank=True, required=False)
 
     """
-    does the customer allow usage of stock images?
+    choice for the source where the banner images should be used from: customer, website, rehiohelden
     """
-    stock_images_allowed = serializers.BooleanField(required=True)
+    banner_image_selection = serializers.ChoiceField(choices=DISPLAY_BANNER_IMAGE_SOURCE_CHOICES, required=True)
 
     """
     chose which type of target page should be used in the ad? new or existing website
     """
-    target_page_type = serializers.ChoiceField(choices=LANDING_PAGE_CHOICES, required=True)
+    target_page_type = serializers.ChoiceField(choices=LANDING_PAGE_CHOICES, required=False)
 
     """
     url of the ads target website if LANDING_PAGE_CUSTOMER is chosen in target_page_type
@@ -1094,6 +1115,11 @@ class OrderLineDisplayBasicSerializer(serializers.Serializer):
     HC: ProductDisplay.premium_for_html5 (true if CREATIVE_OPTION_CREATE_ANIMATED, false otherwise)
     """
     creative_options = serializers.ChoiceField(choices=DISPLAY_BASIC_CREATIVE_OPTION_CHOICES, required=True)
+
+    def validate(self, data):
+        if data.get('geo_targeting') and not data.get('geo_targeting_radius'):
+            raise serializers.ValidationError('Geo targeting radius is mandatory')
+        return data
 
 
 class OrderLineDisplayPremiumSerializer(serializers.Serializer):
