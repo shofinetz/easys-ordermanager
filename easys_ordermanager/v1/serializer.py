@@ -1551,6 +1551,21 @@ class OrderLineListingSerializer(serializers.Serializer):
     keywords = serializers.ListField(child=serializers.CharField(max_length=55, required=True), allow_empty=True,
                                      required=True)
 
+    def validate(self, data):
+        self.validate_unique_opening_hours(data['opening_hours'])
+        return data
+
+    def validate_unique_opening_hours(self, opening_hours):
+        opening_hours = opening_hours or []
+        checked_days = []
+        for day_schedule in opening_hours:
+            if day_schedule['day_of_week'] in checked_days:
+                raise serializers.ValidationError(
+                    'Multiple opening hours found set for day of week {}.'.format(day_schedule['day_of_week'])
+                )
+            else:
+                checked_days.append(day_schedule['day_of_week'])
+
 
 class OrderLineSeoSerializer(serializers.Serializer):
     """

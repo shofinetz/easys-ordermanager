@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1 (2020-02-27)
+Add unique validation on `opening_hours` list of values of `OrderLineListingSerializer`. 
+The  opening hours lis should be unique for every `day_of_week` (see `OrderLineListingOpeningHoursSerializer`)
+
 
 ## 1.2.0 (2019-09-17)
 This release contains backwards incompatible changes.
@@ -9,7 +13,7 @@ Changes on `OrderLineDisplayBasicSerializer`
   * New: `geo_targeting_zip` field which accepts one string zip code. Not mandatory
   * New: `geo_targeting_radius` field accepting integer values between 1-80 (km). Mandatory only if `geo_targeting_zip` is given.  
   * Removed: `stock_images_allowed` field:
-  * New: `banner_images_source` choice field accepting following values: 
+  * New: `banner_image_selection` choice field accepting following values: 
     * 0 for 'From website' / 'Von der Webseite' option
     * 1 for 'From customer' / 'Vom kunden' option
     * 2 for 'Customer photos' / 'Regiohelden Bilder' option 
