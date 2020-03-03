@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.2 (2020-02-27)
+Add proper dependencies to avoid unwanted failure with possible upgrades when installed freshly.
+See requirements.txt for dependencies
+
 ## 1.2.1 (2020-02-27)
 Add unique validation on `opening_hours` list of values of `OrderLineListingSerializer`. 
 The  opening hours lis should be unique for every `day_of_week` (see `OrderLineListingOpeningHoursSerializer`)

@@ -1,8 +1,8 @@
 django>=1.11.20
-django-countries>=4.4
-django-iban>=0.3.1
-django-internationalflavor>=0.3.1
-django-model-utils>=3.1.2
-django-phonenumber-field>=0.7.2
-djangorestframework>=3.7.7
-phonenumbers>=7.0.6
+django-countries>=4.4,<6.0
+django-iban>=0.3.1,<0.4
+django-internationalflavor>=0.3.1,<0.4
+django-model-utils>=3.1.2,<4.0
+django-phonenumber-field>=3.0.1,<4.1
+djangorestframework>=3.7.7,<3.12
+phonenumbers>=7.0.6,<8.11.5
