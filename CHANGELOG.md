@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.3 (2020-03-03)
+Make sure Django 3 is not installed until further support
+
 ## 1.2.2 (2020-03-03)
 Add proper dependencies to avoid unwanted failure with possible upgrades when installed freshly.
 See requirements.txt for dependencies
