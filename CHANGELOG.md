@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.2.2 (2020-02-27)
+## 1.2.2 (2020-03-03)
 Add proper dependencies to avoid unwanted failure with possible upgrades when installed freshly.
 See requirements.txt for dependencies
 
