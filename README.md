@@ -9,4 +9,5 @@
 - Commit your changes
 - Install and use [bump2version](https://github.com/c4urself/bump2version) to automatically adjust a new version and create the git tag
 E.g bump2version patch|minor|major
+- git push and git push --tags to publish the new tag to the remote repository (Github)
 - Travis will run the build and will publish to Pypi automatically when tests are not failing
