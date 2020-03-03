@@ -4,6 +4,12 @@
 
 # EasyS order manager API
 
+Compatible with
+- Django Rest Framework: 3.8, 3.9, 3.10, 3.11
+- Django: 1.11, 2.2 (Not yet for 3.x)
+- Python: 3.6, 3.7, 3.8
+
+
 ## Relasing new version
 - Update CHANGELOG.md with the new change logs
 - Commit your changes

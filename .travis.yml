@@ -12,7 +12,6 @@ env:
   - DJANGO_VERSION=1.11.28
   - DJANGO_VERSION=2.1.15
   - DJANGO_VERSION=2.2.10
-  - DJANGO_VERSION=3.0.3
 
 matrix:
   include:
