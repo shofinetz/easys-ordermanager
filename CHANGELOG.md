@@ -1,6 +1,17 @@
 # Changelog
 
-## 1.2.4 (2020-04-02)
+## 1.3.0 (2020-04-02)
+Added new OrdeLine Serializer for Landingpage product `OrderLineLandingpageSerializer`. 
+(The fields definitions of the Landingpage order line are the same as those from the `OrderLineWebsiteSerializer`)
+  * `additional_subpages`: mandatory positive integer
+  * `logo_creation`: 3 choices field:
+    * 1: 'Create new logo'
+    * 2: 'Use existing logo'
+    * 3: 'No logo at all, text only'
+
+Changes on `OrderLineSerializer`
+  * Add new field `detail_landingpage` of type `OrderLineLandingpageSerializer`
+
 Changes on `OrderLineGoogleAdsBasicSerializer`
   * Add  `target_page_type` field which accepts 3 choices (see `GOOGLE_ADS_LANDING_PAGE_CHOICES`): 
     * 1: 'New website'
@@ -15,17 +26,6 @@ Changes on `OrderLineGoogleAdsPremiumSerializer`
     * 'customer': 'Customer website'
   * Add Decimal field `remarketing_setup_fee`. Validate that value >=0 is provided if `include_remarketing=true` 
   * Add Decimal field `remarketing_budget`. Validate that that value >0 is provided if `include_remarketing=true`
-
-Added new OrdeLine Serializer for Landingpage product `OrderLineLandingpageSerializer`. 
-(The fields definitions of the Landingpage order line are the same as those from the `OrderLineWebsiteSerializer`)
-  * `additional_subpages`: mandatory positive integer
-  * `logo_creation`: 3 choices field:
-    * 1: 'Create new logo'
-    * 2: 'Use existing logo'
-    * 3: 'No logo at all, text only'
-
-Changes on `OrderLineSerializer`
-  * Add new field `detail_landingpage` of type `OrderLineLandingpageSerializer`
 
 Add new validation on the main Serializer: If a product provides value for `target_page_type` and that value is a website or a landingpage choice, validate that the main order contains an order for website or landingpage product.
 
