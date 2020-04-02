@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.3.0 (2020-04-02)
+## 1.3.2 (2020-04-02)
 Added new OrdeLine Serializer for Landingpage product `OrderLineLandingpageSerializer`. 
 (The fields definitions of the Landingpage order line are the same as those from the `OrderLineWebsiteSerializer`)
   * `additional_subpages`: mandatory positive integer
