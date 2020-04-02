@@ -13,5 +13,5 @@ class SerializerV1TestCase(TestCase):
             self.fixture = json.load(f)
 
     def test_validate_data(self):
-        s = Serializer()
-        self.assertTrue(s.validate(self.fixture))
+        s = Serializer(data=self.fixture)
+        self.assertTrue(s.is_valid(raise_exception=True))

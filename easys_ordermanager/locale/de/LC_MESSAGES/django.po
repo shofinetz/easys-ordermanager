@@ -48,6 +48,9 @@ msgstr "Neue Webseite"
 msgid "Customer website"
 msgstr "Kundenwebseite"
 
+msgid "New landingpage"
+msgstr "Neue Landingpage"
+
 msgid "Basic"
 msgstr "Basic"
 
@@ -74,6 +77,9 @@ msgstr "Listing"
 
 msgid "Website"
 msgstr "Webseite"
+
+msgid "Landingpage"
+msgstr "Landingpage"
 
 msgid "Facebook"
 msgstr "Facebook"

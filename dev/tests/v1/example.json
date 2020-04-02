@@ -113,14 +113,20 @@
             "expected_conversions": 92,
             "has_quality_measures": true,
             "include_remarketing": true,
+            "remarketing_setup_fee": 199,
+            "remarketing_budget": 200,
             "call_tracking": false,
             "keywords": [
                 "maga", "wall", "borderwall", "stupid"
+            ],
+            "topics": [
+                "040300-2", "040300", "070200-1"
             ],
             "keywords_with_zero_search_volume": [
                 "best president ever", "smart guy"
             ],
             "target_audience": "Crazy stupid rednecks",
+            "target_page_type": 3,
             "usp": "Best wall you've ever seen"
         }
     },{
@@ -267,6 +273,30 @@
             "design_preference_text_picture": 1,
             "design_preferences": "design_preferences",
             "campaign_goal": "Build the amazing e-Wall"
+        }
+    }, {
+        "easys_id": 9824579,
+        "easys_order_id": 84274,
+        "easys_account_location_id": 18736,
+        "rebate_percentage": 0,
+        "setup_fee": 100,
+        "start_fee": 0,
+        "budget": 0,
+        "fee": 99,
+        "one_time_budget": 0,
+        "commission": 0,
+        "deferred_payment_sum": 0,
+        "deferred_payment_months": null,
+        "comment": "The great wall website",
+        "start_date": "2019-04-01",
+        "end_date": "2025-03-31",
+        "product_type": 11,
+        "product_level": 1,
+        "initial_term_months": 6,
+        "detail_landingpage": {
+            "included_subpages": 1,
+            "additional_subpages": 1,
+            "logo_creation": 1
         }
     }, {
         "easys_id": 9824566,

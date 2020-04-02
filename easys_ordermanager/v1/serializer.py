@@ -35,11 +35,18 @@ TITLE_CHOICES = Choices(
     (TITLE_MRS_PROF, 'mrs_prof', _('Mrs. Prof.')),
 )
 
-LANDING_PAGE_NEW = 1
-LANDING_PAGE_CUSTOMER = 2
+NEW_WEBSITE = 1
+CUSTOMER_WEBSITE = 2
+NEW_LANDINGPAGE = 3
 LANDING_PAGE_CHOICES = Choices(
-    (LANDING_PAGE_NEW, 'new', _('New website')),
-    (LANDING_PAGE_CUSTOMER, 'customer', _('Customer website')),
+    (NEW_WEBSITE, 'new', _('New website')),
+    (CUSTOMER_WEBSITE, 'customer', _('Customer website')),
+)
+
+GOOGLE_ADS_LANDING_PAGE_CHOICES = Choices(
+    (NEW_WEBSITE, 'new', _('New website')),
+    (NEW_LANDINGPAGE, 'new_lp', _('New landingpage')),
+    (CUSTOMER_WEBSITE, 'customer', _('Customer website')),
 )
 
 PRODUCT_LEVEL_BASIC = 1
@@ -61,6 +68,7 @@ PRODUCT_TYPE_FACEBOOK = 7
 PRODUCT_TYPE_CUSTOMER_WEBSITE = 8
 PRODUCT_TYPE_EMAIL = 9
 PRODUCT_TYPE_CONVERSION_TRACKING = 10
+PRODUCT_TYPE_LANDINGPAGE = 11
 PRODUCT_TYPE_CHOICES = Choices(
     (PRODUCT_TYPE_GOOGLE_ADS, 'google_ads', _('Google Ads')),
     (PRODUCT_TYPE_DISPLAY, 'display', _('Display')),
@@ -68,11 +76,25 @@ PRODUCT_TYPE_CHOICES = Choices(
     (PRODUCT_TYPE_SEO, 'seo', _('SEO')),
     (PRODUCT_TYPE_LISTING, 'listing', _('Listing')),
     (PRODUCT_TYPE_WEBSITE, 'website', _('Website')),
+    (PRODUCT_TYPE_LANDINGPAGE, 'landingpage', _('Landingpage')),
     (PRODUCT_TYPE_FACEBOOK, 'facebook', _('Facebook')),
     (PRODUCT_TYPE_CUSTOMER_WEBSITE, 'customer_website', _('Customer website')),
     (PRODUCT_TYPE_EMAIL, 'email', _('Email')),
     (PRODUCT_TYPE_CONVERSION_TRACKING, 'conversion_tracking', _('Conversion tracking')),
 )
+
+PRODUCT_TYPE_ORDER_ATTRIBUTES_MAPPING = {
+    PRODUCT_TYPE_GOOGLE_ADS: {'detail_google_ads_basic', 'detail_google_ads_premium'},
+    PRODUCT_TYPE_DISPLAY: {'detail_display_basic', 'detail_display_premium'},
+    PRODUCT_TYPE_FACEBOOK: {'detail_facebook'},
+    PRODUCT_TYPE_IN_APP: {'detail_inapp'},
+    PRODUCT_TYPE_LISTING: {'detail_listing'},
+    PRODUCT_TYPE_SEO: {'detail_seo'},
+    PRODUCT_TYPE_WEBSITE: {'detail_website'},
+    PRODUCT_TYPE_LANDINGPAGE: {'detail_landingpage'},
+    PRODUCT_TYPE_CUSTOMER_WEBSITE: {'detail_customer_website'},
+    PRODUCT_TYPE_EMAIL: {'detail_email'},
+}
 
 CREATIVE_OPTION_CUSTOMER = 1
 CREATIVE_OPTION_CREATE_STATIC = 2
@@ -898,11 +920,6 @@ class OrderLineGoogleAdsBasicSerializer(serializers.Serializer):
     campaign_goal = serializers.CharField(max_length=200, allow_blank=True, required=False)
 
     """
-    which cities/regions should the ad be targeted on?
-    """
-    regions = serializers.ListField(child=serializers.CharField(max_length=100, required=True), required=True)
-
-    """
     the expected impression share when the campaign budget is initially calculated
     """
     expected_impression_share = serializers.DecimalField(
@@ -912,6 +929,11 @@ class OrderLineGoogleAdsBasicSerializer(serializers.Serializer):
     the expected impressions when the campaign budget is initially calculated
     """
     expected_impressions = serializers.CharField(max_length=50, allow_blank=True, required=False)
+
+    """
+    which cities/regions should the ad be targeted on?
+    """
+    regions = serializers.ListField(child=serializers.CharField(max_length=100, required=True), required=True)
 
     """
     customer preferred keywords to be found on with his campaign
@@ -929,6 +951,11 @@ class OrderLineGoogleAdsBasicSerializer(serializers.Serializer):
     definition of the target group this google ads campaign should be focused on
     """
     target_audience = serializers.CharField(max_length=1000, required=True)
+
+    """
+    chose which type of target page should be used in the ad? new or existing website
+    """
+    target_page_type = serializers.ChoiceField(choices=GOOGLE_ADS_LANDING_PAGE_CHOICES, required=False)
 
 
 class OrderLineGoogleAdsPremiumSerializer(serializers.Serializer):
@@ -948,11 +975,6 @@ class OrderLineGoogleAdsPremiumSerializer(serializers.Serializer):
     campaign_goal = serializers.CharField(max_length=200, allow_blank=True, required=False)
 
     """
-    which cities/regions should the ad be targeted on?
-    """
-    regions = serializers.ListField(child=serializers.CharField(max_length=100, required=True), required=True)
-
-    """
     the expected clicks when the campaign budget is initially calculated
     """
     expected_clicks = serializers.IntegerField(required=True)
@@ -963,19 +985,19 @@ class OrderLineGoogleAdsPremiumSerializer(serializers.Serializer):
     expected_conversions = serializers.IntegerField(required=True)
 
     """
-    does the customer already have a google ads account that we should take over and optimize, provide the account id
+    which cities/regions should the ad be targeted on?
     """
-    existing_account_id = serializers.CharField(max_length=10, allow_blank=True, required=False)
-
-    """
-    does the customer want to have a remarketing campaign included?
-    """
-    include_remarketing = serializers.BooleanField(required=False)
+    regions = serializers.ListField(child=serializers.CharField(max_length=100, required=True), required=True)
 
     """
     customer preferred keywords to be found on with his campaign
     """
     keywords = serializers.ListField(child=serializers.CharField(max_length=100, required=True), required=True)
+
+    """
+    customer preferred topics (branch_codes) from which the keywords will be used to build his campaigns
+    """
+    branch_codes = serializers.ListField(child=serializers.CharField(max_length=100, required=True), required=False)
 
     """
     list of keywords that resulted in zero search volume on campaign calculation
@@ -995,12 +1017,48 @@ class OrderLineGoogleAdsPremiumSerializer(serializers.Serializer):
     usp = serializers.CharField(max_length=1000, required=True)
 
     """
+    chose which type of target page should be used in the ad? new or existing website
+    """
+    target_page_type = serializers.ChoiceField(choices=GOOGLE_ADS_LANDING_PAGE_CHOICES, required=False)
+
+    """
     specifies if campaign will be tracked or not.
     This is true in case if customer has campaign tracking booked for Stroer Website.
     If campaign tracking for customer Website than field is false and new detail_customer_website order has to be added.
     RH: must book an additional call tracking number
     """
     call_tracking = serializers.BooleanField(required=True)
+
+    """
+    does the customer already have a google ads account that we should take over and optimize, provide the account id
+    """
+    existing_account_id = serializers.CharField(max_length=10, allow_blank=True, required=False)
+
+    """
+    does the customer want to have a remarketing campaign included?
+    """
+    include_remarketing = serializers.BooleanField(required=False)
+
+    """
+    if remarketing campaign is booked (include_remarketing=True) this id its own separate setup fee
+    """
+    remarketing_setup_fee = serializers.DecimalField(decimal_places=2, max_digits=10, allow_null=True, required=False)
+
+    """
+    if remarketing campaign is booked (include_remarketing=True) this id its own separate budget
+    """
+    remarketing_budget = serializers.DecimalField(decimal_places=2, max_digits=10, allow_null=True, required=False)
+
+    def validate(self, data):
+        if data.get('include_remarketing') and data.get('remarketing_setup_fee') is None:
+            raise serializers.ValidationError(
+                {'remarketing_setup_fee': 'value >= 0 must be provided when include_remarketing is true'}
+            )
+        if data.get('include_remarketing') and not data.get('remarketing_budget'):
+            raise serializers.ValidationError(
+                {'remarketing_budget': 'value > 0 must be provided when include_remarketing is true'}
+            )
+        return data
 
 
 class OrderLineDisplayBasicSerializer(serializers.Serializer):
@@ -1090,7 +1148,7 @@ class OrderLineDisplayBasicSerializer(serializers.Serializer):
     target_page_type = serializers.ChoiceField(choices=LANDING_PAGE_CHOICES, required=False)
 
     """
-    url of the ads target website if LANDING_PAGE_CUSTOMER is chosen in target_page_type
+    url of the ads target website if CUSTOMER_WEBSITE is chosen in target_page_type
     """
     target_url = serializers.URLField(allow_blank=True, required=False)
 
@@ -1201,7 +1259,7 @@ class OrderLineDisplayPremiumSerializer(serializers.Serializer):
     target_page_type = serializers.ChoiceField(choices=LANDING_PAGE_CHOICES, required=True)
 
     """
-    url of the ads target website if LANDING_PAGE_CUSTOMER is chosen in target_page_type
+    url of the ads target website if CUSTOMER_WEBSITE is chosen in target_page_type
     """
     target_url = serializers.URLField(allow_blank=True, required=False)
 
@@ -1283,7 +1341,7 @@ class OrderLineFacebookSerializer(serializers.Serializer):
     target_page_type = serializers.ChoiceField(choices=LANDING_PAGE_CHOICES, required=True)
 
     """
-    url of the ads target website if LANDING_PAGE_CUSTOMER is chosen in target_page_type
+    url of the ads target website if CUSTOMER_WEBSITE is chosen in target_page_type
 
     """
     target_url = serializers.URLField(allow_blank=True, required=False)
@@ -1412,7 +1470,7 @@ class OrderLineInAppSerializer(serializers.Serializer):
     target_page_type = serializers.ChoiceField(choices=LANDING_PAGE_CHOICES, required=True)
 
     """
-    url of the ads target website if LANDING_PAGE_CUSTOMER is chosen in target_page_type
+    url of the ads target website if CUSTOMER_WEBSITE is chosen in target_page_type
 
     """
     target_url = serializers.URLField(allow_blank=True, required=False)
@@ -1591,13 +1649,13 @@ class OrderLineSeoSerializer(serializers.Serializer):
     target_page_type = serializers.ChoiceField(choices=LANDING_PAGE_CHOICES, required=True)
 
     """
-    url of the target website if LANDING_PAGE_CUSTOMER is chosen in target_page_type
+    url of the target website if CUSTOMER_WEBSITE is chosen in target_page_type
 
     """
     target_url = serializers.URLField(allow_blank=True, required=False)
 
     """
-    credentials to access the target page if LANDING_PAGE_CUSTOMER is chosen in target_page_type
+    credentials to access the target page if CUSTOMER_WEBSITE is chosen in target_page_type
 
     """
     target_page_credentials = serializers.CharField(max_length=1000, allow_blank=True, required=False)
@@ -1646,6 +1704,22 @@ class OrderLineSeoSerializer(serializers.Serializer):
     ticket_id = serializers.CharField(max_length=20, required=True)
 
 
+class OrderLineLandingpageSerializer(serializers.Serializer):
+    """
+    information for a Landingpage product
+    """
+
+    """
+    count of additionally booked subpages
+    """
+    additional_subpages = serializers.IntegerField(required=True, min_value=0)
+
+    """
+    should a new logo be created for the customer?
+    """
+    logo_creation = serializers.ChoiceField(choices=LOGO_CREATION_CHOICES, required=True)
+
+
 class OrderLineWebsiteSerializer(serializers.Serializer):
     """
     detailed specifications and briefing information for a website product
@@ -1661,7 +1735,7 @@ class OrderLineWebsiteSerializer(serializers.Serializer):
     count of addtionally booked subpages
 
     """
-    additional_subpages = serializers.IntegerField(required=True)
+    additional_subpages = serializers.IntegerField(required=True, min_value=0)
 
     """
     customer desired domain name
@@ -2037,6 +2111,12 @@ class OrderLineSerializer(serializers.Serializer):
     detail_website = OrderLineWebsiteSerializer(required=False)
 
     """
+    sub-serializer for landingpage specific product data
+    easys detail dataset per order item, can be skipped if this detail is not meant for the item's product type
+    """
+    detail_landingpage = OrderLineLandingpageSerializer(required=False)
+
+    """
     sub-serializer for external website specific product data
     one detail dataset per order item, can be skipped if this detail is not meant for the item's product type
     """
@@ -2200,6 +2280,7 @@ class Serializer(serializers.Serializer):
         self.validate_productdetail_exists(data=data)
         self.validate_productfee_commissions(data=data)
         self.validate_deferred_payments(data=data)
+        self.validate_website_and_landingpage_exists(data=data)
         # return verified data
         return data
 
@@ -2208,12 +2289,16 @@ class Serializer(serializers.Serializer):
             if orderline['product_type'] in [PRODUCT_TYPE_GOOGLE_ADS] and \
                     orderline['product_level'] in [PRODUCT_LEVEL_BASIC]:
                 if orderline.get('commission') != Decimal('40'):
-                    raise serializers.ValidationError('Commission value for this product is fixed to 40')
+                    raise serializers.ValidationError('commission value for orderline {} is fixed to 40'.format(
+                        orderline['easys_id']
+                    ))
 
     def validate_deferred_payments(self, data):
-        for order_line in data['orderlines']:
-            if order_line.get('deferred_payment_sum', False) and not order_line.get('deferred_payment_months'):
-                raise serializers.ValidationError('Deferred payment months is required')
+        for orderline in data['orderlines']:
+            if orderline.get('deferred_payment_sum', False) and not orderline.get('deferred_payment_months'):
+                raise serializers.ValidationError('deferred payment months is required for orderline {}'.format(
+                    orderline['easys_id']
+                ))
 
     def validate_seller_shares(self, data):
         # verify that all accounts of orders are known
@@ -2228,23 +2313,37 @@ class Serializer(serializers.Serializer):
                         order['easys_id'], sellershare_sum))
 
     def validate_productdetail_exists(self, data):
-        mapping = {
-            PRODUCT_TYPE_GOOGLE_ADS: {'detail_google_ads_basic', 'detail_google_ads_premium'},
-            PRODUCT_TYPE_DISPLAY: {'detail_display_basic', 'detail_display_premium'},
-            PRODUCT_TYPE_FACEBOOK: {'detail_facebook'},
-            PRODUCT_TYPE_IN_APP: {'detail_inapp'},
-            PRODUCT_TYPE_LISTING: {'detail_listing'},
-            PRODUCT_TYPE_SEO: {'detail_seo'},
-            PRODUCT_TYPE_WEBSITE: {'detail_website'},
-            PRODUCT_TYPE_CUSTOMER_WEBSITE: {'detail_customer_website'},
-            PRODUCT_TYPE_EMAIL: {'detail_email'},
-        }
-
         for orderline in data['orderlines']:
-            if orderline['product_type'] in mapping:
-                if not mapping[orderline['product_type']].intersection(orderline.keys()):
+            if orderline['product_type'] in PRODUCT_TYPE_ORDER_ATTRIBUTES_MAPPING:
+                if not PRODUCT_TYPE_ORDER_ATTRIBUTES_MAPPING[orderline['product_type']].intersection(orderline.keys()):
                     raise serializers.ValidationError('orderline {} is missing the product detail data'.format(
                         orderline['easys_id']))
+
+    def validate_website_and_landingpage_exists(self, data):
+        # if one products has a its target urls chosen to be a HC website or landingpage,
+        # validate that an order for it was delivered
+        needs_website = False
+        has_website = False
+        needs_landingpage = False
+        has_landingpage = False
+        for orderline in data['orderlines']:
+            if orderline['product_type'] in PRODUCT_TYPE_ORDER_ATTRIBUTES_MAPPING:
+                detail_attribute = PRODUCT_TYPE_ORDER_ATTRIBUTES_MAPPING[orderline['product_type']].intersection(
+                    orderline.keys()).pop()
+                if orderline[detail_attribute].get('target_page_type') == NEW_WEBSITE:
+                    needs_website = True
+                if orderline[detail_attribute].get('target_page_type') == NEW_LANDINGPAGE:
+                    needs_landingpage = True
+                if orderline['product_type'] == PRODUCT_TYPE_LANDINGPAGE:
+                    has_landingpage = True
+                if orderline['product_type'] == PRODUCT_TYPE_WEBSITE:
+                    has_website = True
+        if needs_landingpage and not has_landingpage:
+            raise serializers.ValidationError('orderline for Landingpage product has to be provided since it was a '
+                                              'selected option in target_page_type in other product.')
+        if needs_website and not has_website:
+            raise serializers.ValidationError('orderline for Website product has to be provided since it was a '
+                                              'selected option in target_page_type in other product.')
 
     def validate_easys_ids(self, data):
         # get ids to validate against
