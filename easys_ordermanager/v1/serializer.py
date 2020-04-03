@@ -2280,7 +2280,7 @@ class Serializer(serializers.Serializer):
         self.validate_productdetail_exists(data=data)
         self.validate_productfee_commissions(data=data)
         self.validate_deferred_payments(data=data)
-        self.validate_website_and_landingpage_exists(data=data)
+        # self.validate_website_and_landingpage_exists(data=data)
         # return verified data
         return data
 
