@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4.0 (2020-04-14)
+This package version introduces a new Serializer version v2, and reverts the contents of the v1 Serializer version to the last know stable version (1.2.3)
+
+* `easys-ordermanager/easys_ordermanager/v1/serializer.Serializer` contains the exact same contents and validations as the Serializer release in the easys_ordermanager 1.2.3
+
+* `easys-ordermanager/easys_ordermanager/v2/serializer.Serializer` contains all new changes introduced in easys_ordermanager 1.3.2 (please see changes in **Changelog 1.3.2 (2020-04-02)** )
+
+
 ## 1.3.2 (2020-04-02)
 Added new OrdeLine Serializer for Landingpage product `OrderLineLandingpageSerializer`. 
 (The fields definitions of the Landingpage order line are the same as those from the `OrderLineWebsiteSerializer`)
@@ -10,17 +18,17 @@ Added new OrdeLine Serializer for Landingpage product `OrderLineLandingpageSeria
     * 3: 'No logo at all, text only'
 
 Changes on `OrderLineSerializer`
-  * Add new field `detail_landingpage` of type `OrderLineLandingpageSerializer`
+  * Add (not required) `detail_landingpage` field of type `OrderLineLandingpageSerializer`
 
 Changes on `OrderLineGoogleAdsBasicSerializer`
-  * Add  `target_page_type` field which accepts 3 choices (see `GOOGLE_ADS_LANDING_PAGE_CHOICES`): 
+  * Add (not required) `target_page_type` field which accepts 3 choices (see `GOOGLE_ADS_LANDING_PAGE_CHOICES`): 
     * 1: 'New website'
     * 2: 'Customer website'
     * 3: 'New landingpage'
     
 Changes on `OrderLineGoogleAdsPremiumSerializer`
-  * Add `branch_codes` field which accepts a list of Herocentral equivalent of an Industry Topic codes. Herocentral will validate their existence.
-  * Add  `target_page_type` field which accepts 3 choices (see `GOOGLE_ADS_LANDING_PAGE_CHOICES`): 
+  * Add (not required) `branch_codes` field which accepts a list of Herocentral equivalent of an Industry Topic codes. Herocentral will validate their existence.
+  * Add (not required) `target_page_type` field which accepts 3 choices (see `GOOGLE_ADS_LANDING_PAGE_CHOICES`): 
     * 'new': 'New website'
     * 'new_lp': 'New landingpage'
     * 'customer': 'Customer website'
@@ -28,6 +36,12 @@ Changes on `OrderLineGoogleAdsPremiumSerializer`
   * Add Decimal field `remarketing_budget`. Validate that that value >0 is provided if `include_remarketing=true`
 
 Add new validation on the main Serializer: If a product provides value for `target_page_type` and that value is a website or a landingpage choice, validate that the main order contains an order for website or landingpage product.
+The orderline products which can provide values for `target_page_type` are: 
+  * OrderLineDisplayBasicSerializer
+  * OrderLineDisplayPremiumSerializer
+  * OrderLineSeoSerializer
+  * OrderLineInAppSerializer 
+  * OrderLineFacebookSerializer
 
 
 ## 1.2.3 (2020-03-03)
