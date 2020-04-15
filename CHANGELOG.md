@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.4.0 (2020-04-14)
+## 1.4.1 (2020-04-15)
 This package version introduces a new Serializer version v2, and reverts the contents of the v1 Serializer version to the last know stable version (1.2.3)
 
 * `easys-ordermanager/easys_ordermanager/v1/serializer.Serializer` contains the exact same contents and validations as the Serializer release in the easys_ordermanager 1.2.3
