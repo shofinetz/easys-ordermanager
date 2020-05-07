@@ -2,13 +2,13 @@
 
 # 1.4.2 (2020-05-07)
 Updates to Serializer v2
-see [serializer changelog](../blob/master/CHANGELOG_SERIALIZER.md)
+see [serializer changelog](https://github.com/RegioHelden/easys-ordermanager/blob/master/CHANGELOG_SERIALIZER.md)
 
 ## 1.4.1 (2020-04-15)
 Introduction of serializer v2
 * `easys-ordermanager/easys_ordermanager/v1/serializer.Serializer` is now frozen on the state of release 1.2.3
 * `easys-ordermanager/easys_ordermanager/v2/serializer.Serializer` is considered WIP until integration in EasyS starts and new changes will go into v3
-see [serializer changelog](../blob/master/CHANGELOG_SERIALIZER.md) for changes between v1 and v2
+see [serializer changelog](https://github.com/RegioHelden/easys-ordermanager/blob/master/CHANGELOG_SERIALIZER.md) for changes between v1 and v2
 
 ## 1.3.2 (2020-04-02)
 Reverted
