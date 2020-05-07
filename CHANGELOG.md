@@ -1,48 +1,17 @@
 # Changelog
 
+# 1.4.2 (2020-05-07)
+Updates to Serializer v2
+see [serializer changelog](../blob/master/CHANGELOG_SERIALIZER.md)
+
 ## 1.4.1 (2020-04-15)
-This package version introduces a new Serializer version v2, and reverts the contents of the v1 Serializer version to the last know stable version (1.2.3)
-
-* `easys-ordermanager/easys_ordermanager/v1/serializer.Serializer` contains the exact same contents and validations as the Serializer release in the easys_ordermanager 1.2.3
-
-* `easys-ordermanager/easys_ordermanager/v2/serializer.Serializer` contains all new changes introduced in easys_ordermanager 1.3.2 (please see changes in **Changelog 1.3.2 (2020-04-02)** )
-
+Introduction of serializer v2
+* `easys-ordermanager/easys_ordermanager/v1/serializer.Serializer` is now frozen on the state of release 1.2.3
+* `easys-ordermanager/easys_ordermanager/v2/serializer.Serializer` is considered WIP until integration in EasyS starts and new changes will go into v3
+see [serializer changelog](../blob/master/CHANGELOG_SERIALIZER.md) for changes between v1 and v2
 
 ## 1.3.2 (2020-04-02)
-Added new OrdeLine Serializer for Landingpage product `OrderLineLandingpageSerializer`. 
-(The fields definitions of the Landingpage order line are the same as those from the `OrderLineWebsiteSerializer`)
-  * `additional_subpages`: mandatory positive integer
-  * `logo_creation`: 3 choices field:
-    * 1: 'Create new logo'
-    * 2: 'Use existing logo'
-    * 3: 'No logo at all, text only'
-
-Changes on `OrderLineSerializer`
-  * Add (not required) `detail_landingpage` field of type `OrderLineLandingpageSerializer`
-
-Changes on `OrderLineGoogleAdsBasicSerializer`
-  * Add (not required) `target_page_type` field which accepts 3 choices (see `GOOGLE_ADS_LANDING_PAGE_CHOICES`): 
-    * 1: 'New website'
-    * 2: 'Customer website'
-    * 3: 'New landingpage'
-    
-Changes on `OrderLineGoogleAdsPremiumSerializer`
-  * Add (not required) `branch_codes` field which accepts a list of Herocentral equivalent of an Industry Topic codes. Herocentral will validate their existence.
-  * Add (not required) `target_page_type` field which accepts 3 choices (see `GOOGLE_ADS_LANDING_PAGE_CHOICES`): 
-    * 'new': 'New website'
-    * 'new_lp': 'New landingpage'
-    * 'customer': 'Customer website'
-  * Add Decimal field `remarketing_setup_fee`. Validate that value >=0 is provided if `include_remarketing=true` 
-  * Add Decimal field `remarketing_budget`. Validate that that value >0 is provided if `include_remarketing=true`
-
-Add new validation on the main Serializer: If a product provides value for `target_page_type` and that value is a website or a landingpage choice, validate that the main order contains an order for website or landingpage product.
-The orderline products which can provide values for `target_page_type` are: 
-  * OrderLineDisplayBasicSerializer
-  * OrderLineDisplayPremiumSerializer
-  * OrderLineSeoSerializer
-  * OrderLineInAppSerializer 
-  * OrderLineFacebookSerializer
-
+Reverted
 
 ## 1.2.3 (2020-03-03)
 Make sure Django 3 is not installed until further support

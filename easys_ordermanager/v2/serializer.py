@@ -552,7 +552,8 @@ class AccountSerializer(serializers.Serializer):
     "011100_3" for "Dienstleistung / Handwerk / Baugewerbe / Ladenbau / Maßmöbel"
 
     """
-    branch_codes = serializers.ListField(child=serializers.CharField(max_length=16, required=True), required=True)
+    branch_codes = serializers.ListField(
+        child=serializers.CharField(max_length=16, required=True), required=True, allow_empty=False)
 
     """
     generic comment on the customer
@@ -933,7 +934,8 @@ class OrderLineGoogleAdsBasicSerializer(serializers.Serializer):
     """
     which cities/regions should the ad be targeted on?
     """
-    regions = serializers.ListField(child=serializers.CharField(max_length=100, required=True), required=True)
+    regions = serializers.ListField(
+        child=serializers.CharField(max_length=100, required=True), required=True, allow_empty=False)
 
     """
     customer preferred keywords to be found on with his campaign
@@ -1665,13 +1667,14 @@ class OrderLineSeoSerializer(serializers.Serializer):
 
     """
     topics = serializers.ListField(
-        child=serializers.CharField(max_length=100, required=True), required=True)
+        child=serializers.CharField(max_length=100, required=True), required=True, allow_empty=False)
 
     """
     regions to optimize for
 
     """
-    regions = serializers.ListField(child=serializers.CharField(max_length=100, required=True), required=True)
+    regions = serializers.ListField(
+        child=serializers.CharField(max_length=100, required=True), required=True, allow_empty=False)
 
     """
     main focus of the seo optimization, which of the customers products/services is the most important?
