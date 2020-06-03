@@ -1,13 +1,16 @@
 # Serializer changes
 
-## v2
-
 ### Release 1.4.2
 
-* AccountSerializer.branch_codes cannot be empty any more
-* OrderLineGoogleAdsBasicSerializer.regions cannot be empty any more
-* OrderLineSeoSerializer.topics cannot be empty any more
-* OrderLineSeoSerializer.regions cannot be empty any more
+#### `AccountSerializer`
+* `branch_codes` cannot be empty any more
+
+#### `OrderLineSeoSerializer`
+* `topics` cannot be empty any more
+* `regions` cannot be empty any more
+
+#### `OrderLineGoogleAdsBasicSerializer`
+* `regions` cannot be empty any more
 
 ### Release 1.4.1
 
@@ -31,7 +34,7 @@ added, similar to `OrderLineWebsiteSerializer` except for
 * added `remarketing_setup_fee`: decimal, must be >=0 if `include_remarketing=true`
 * added `remarketing_budget`: decimal, must be >=0 if `include_remarketing=true` 
 
-#### Serializer
+#### Validations
 * added validation: if any OrderLine detail contains `target_page_type`
     * if set to `NEW_WEBSITE`, the serializer will require an OrderLine of type `PRODUCT_TYPE_WEBSITE` to exist
     * if set to `NEW_LANDINGPAGE`, the serializer will require an OrderLine of type `PRODUCT_TYPE_LANDINGPAGE` to exist
