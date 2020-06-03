@@ -959,6 +959,10 @@ class OrderLineGoogleAdsBasicSerializer(serializers.Serializer):
     """
     target_page_type = serializers.ChoiceField(choices=GOOGLE_ADS_LANDING_PAGE_CHOICES, required=False)
 
+    """
+    url of the ads target website if CUSTOMER_WEBSITE is chosen in target_page_type
+    """
+    target_url = serializers.URLField(allow_blank=True, required=False)
 
 class OrderLineGoogleAdsPremiumSerializer(serializers.Serializer):
     """
@@ -1022,6 +1026,11 @@ class OrderLineGoogleAdsPremiumSerializer(serializers.Serializer):
     chose which type of target page should be used in the ad? new or existing website
     """
     target_page_type = serializers.ChoiceField(choices=GOOGLE_ADS_LANDING_PAGE_CHOICES, required=False)
+
+    """
+    url of the ads target website if CUSTOMER_WEBSITE is chosen in target_page_type
+    """
+    target_url = serializers.URLField(allow_blank=True, required=False)
 
     """
     specifies if campaign will be tracked or not.
@@ -1738,7 +1747,7 @@ class OrderLineWebsiteSerializer(serializers.Serializer):
     count of addtionally booked subpages
 
     """
-    additional_subpages = serializers.IntegerField(required=True, min_value=0)
+    additional_subpages = serializers.IntegerField(required=True, min_value=0, max_value=60)
 
     """
     customer desired domain name

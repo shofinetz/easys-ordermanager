@@ -1,5 +1,18 @@
 # Serializer changes
 
+## v2
+
+### Release 1.4.3
+
+#### `OrderLineWebsiteSerializer`
+* `additional_subpages` must be >= 0 and <= 60 now
+
+#### `OrderLineGoogleAdsBasicSerializer`
+* added optional `target_url`
+
+#### `OrderLineGoogleAdsPremiumSerializer`
+* added optional `target_url`
+
 ### Release 1.4.2
 
 #### `AccountSerializer`
