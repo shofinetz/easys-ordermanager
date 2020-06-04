@@ -964,6 +964,7 @@ class OrderLineGoogleAdsBasicSerializer(serializers.Serializer):
     """
     target_url = serializers.URLField(allow_blank=True, required=False)
 
+
 class OrderLineGoogleAdsPremiumSerializer(serializers.Serializer):
     """
     detailed specifications and briefing information for a google ads premium product - "adwords" product subtype
