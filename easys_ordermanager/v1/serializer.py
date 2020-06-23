@@ -753,7 +753,7 @@ class AccountLocationSerializer(serializers.Serializer):
     id of the google places dataset of that location
 
     """
-    google_places_id = serializers.CharField(max_length=30, allow_blank=True, required=False)
+    google_places_id = serializers.CharField(max_length=1000, allow_blank=True, required=False)
 
     """
     is this the primary location of the customer?

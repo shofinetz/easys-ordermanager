@@ -1,8 +1,15 @@
 # Serializer changes
 
-## v2
+## 1.4.5
 
-### Release 1.4.3
+### v1 / v2
+
+#### `AccountLocationSerializer`
+* Allow `google_places_id` to be 1000 characters max (was 30 before)
+
+## 1.4.3
+
+### v2
 
 #### `OrderLineWebsiteSerializer`
 * `additional_subpages` must be >= 0 and <= 60 now
@@ -13,7 +20,9 @@
 #### `OrderLineGoogleAdsPremiumSerializer`
 * added optional `target_url`
 
-### Release 1.4.2
+## 1.4.2
+
+### v2
 
 #### `AccountSerializer`
 * `branch_codes` cannot be empty any more
@@ -25,7 +34,9 @@
 #### `OrderLineGoogleAdsBasicSerializer`
 * `regions` cannot be empty any more
 
-### Release 1.4.1
+## 1.4.1
+
+### v2
 
 #### `OrderLineLandingpageSerializer`
 added, similar to `OrderLineWebsiteSerializer` except for
