@@ -1,5 +1,8 @@
 # Changelog
 
+# 1.4.7 (2020-06-30)
+Fix test cases
+
 # 1.4.6 (2020-06-30)
 Updates to Serializer v1/v2
 see [serializer changelog](https://github.com/RegioHelden/easys-ordermanager/blob/master/CHANGELOG_SERIALIZER.md)
