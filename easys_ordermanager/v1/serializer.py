@@ -1002,6 +1002,22 @@ class OrderLineGoogleAdsPremiumSerializer(serializers.Serializer):
     """
     call_tracking = serializers.BooleanField(required=True)
 
+    """
+    chose which type of target page should be used in the ad? new or existing website
+    """
+    target_page_type = serializers.ChoiceField(choices=LANDING_PAGE_CHOICES, required=False)
+
+    """
+    the expected impression share when the campaign budget is initially calculated
+    """
+    expected_impression_share = serializers.DecimalField(
+        decimal_places=2, max_digits=5, allow_null=True, required=False)
+
+    """
+    the expected impressions when the campaign budget is initially calculated
+    """
+    expected_impressions = serializers.CharField(max_length=50, allow_blank=True, required=False)
+
 
 class OrderLineDisplayBasicSerializer(serializers.Serializer):
     """

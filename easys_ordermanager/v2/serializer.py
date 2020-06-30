@@ -1061,6 +1061,17 @@ class OrderLineGoogleAdsPremiumSerializer(serializers.Serializer):
     """
     remarketing_budget = serializers.DecimalField(decimal_places=2, max_digits=10, allow_null=True, required=False)
 
+    """
+    the expected impression share when the campaign budget is initially calculated
+    """
+    expected_impression_share = serializers.DecimalField(
+        decimal_places=2, max_digits=5, allow_null=True, required=False)
+
+    """
+    the expected impressions when the campaign budget is initially calculated
+    """
+    expected_impressions = serializers.CharField(max_length=50, allow_blank=True, required=False)
+
     def validate(self, data):
         if data.get('include_remarketing') and data.get('remarketing_setup_fee') is None:
             raise serializers.ValidationError(

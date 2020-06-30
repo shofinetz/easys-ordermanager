@@ -1,5 +1,16 @@
 # Serializer changes
 
+## 1.4.6
+
+### v1 / v2
+
+#### `OrderLineGoogleAdsPremiumSerializer`
+* Add optional `expected_impressions` and `expected_impression_share`
+
+### v1
+
+* Add optional `target_page_type`
+
 ## 1.4.5
 
 ### v1 / v2

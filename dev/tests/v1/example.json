@@ -121,7 +121,10 @@
                 "best president ever", "smart guy"
             ],
             "target_audience": "Crazy stupid rednecks",
-            "usp": "Best wall you've ever seen"
+            "target_page_type": 3,
+            "usp": "Best wall you've ever seen",
+            "expected_impressions": 1000,
+            "expected_impression_share": 48.92
         }
     },{
         "easys_id": 982931,
