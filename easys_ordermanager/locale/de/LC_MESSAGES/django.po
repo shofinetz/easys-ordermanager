@@ -46,7 +46,7 @@ msgid "New website"
 msgstr "Neue Webseite"
 
 msgid "Customer website"
-msgstr "Kundenwebseite"
+msgstr "Kundenwebsite"
 
 msgid "Basic"
 msgstr "Basic"
