@@ -1,5 +1,8 @@
 # Changelog
 
+# 1.4.8 (2020-08-06)
+Changed a translation
+
 # 1.4.7 (2020-06-30)
 Fix test cases
 
