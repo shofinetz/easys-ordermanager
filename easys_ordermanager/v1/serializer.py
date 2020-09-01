@@ -9,7 +9,8 @@ from model_utils.choices import Choices
 from rest_framework import serializers
 
 from easys_ordermanager.fields import PhoneNumberField
-from easys_ordermanager.validators import comma_separated_period_validatior, DomainNameValidator, HexColorValidator
+from easys_ordermanager.validators import comma_separated_period_validatior, HexColorValidator, \
+    ExtendedDomainNameValidator
 
 PAYMENT_METHOD_TRANSFER = 1
 PAYMENT_METHOD_CHARGE = 2
@@ -1683,7 +1684,7 @@ class OrderLineWebsiteSerializer(serializers.Serializer):
     customer desired domain name
 
     """
-    desired_domain = serializers.CharField(max_length=100, validators=[DomainNameValidator()], required=True)
+    desired_domain = serializers.CharField(max_length=100, validators=[ExtendedDomainNameValidator()], required=True)
 
     """
     how should the desired_domain be connected to the website product

@@ -289,11 +289,11 @@
         "commission": 0,
         "deferred_payment_sum": 0,
         "deferred_payment_months": null,
-        "comment": "The great wall website",
+        "comment": "The great wall landingpage",
         "start_date": "2019-04-01",
         "end_date": "2025-03-31",
         "product_type": 11,
-        "product_level": 1,
+        "product_level": null,
         "initial_term_months": 6,
         "detail_landingpage": {
             "included_subpages": 1,
