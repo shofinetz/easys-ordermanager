@@ -1,5 +1,12 @@
 # Serializer changes
 
+## 1.4.9
+
+### v2
+
+#### `OrderLineWebsiteSerializer`
+* Restrict validator for field `desired_domain` to accept only domain names without http protocol and no IP addresses 
+
 ## 1.4.6
 
 ### v1 / v2
