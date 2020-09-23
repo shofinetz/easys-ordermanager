@@ -1,5 +1,12 @@
 # Serializer changes
 
+## 1.4.10
+
+### v1/v2
+
+#### `OrderLineFacebookSerializer`
+* `ages` choices adjustment: `14_18` is now `13_17` and `19_24` is `18_24`
+
 ## 1.4.9
 
 ### v2
