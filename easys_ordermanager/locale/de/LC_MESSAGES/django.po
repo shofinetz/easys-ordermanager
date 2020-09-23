@@ -202,11 +202,11 @@ msgstr "Fans gewinnen"
 msgid "Promote articles"
 msgstr "Beiträge bewerben"
 
-msgid "14-18  years"
-msgstr "14-18 Jahre"
+msgid "13-17  years"
+msgstr "13-17 Jahre"
 
-msgid "19-24  years"
-msgstr "19-24 Jahre"
+msgid "18-24  years"
+msgstr "18-24 Jahre"
 
 msgid "25-34  years"
 msgstr "25-34 Jahre"
@@ -570,6 +570,9 @@ msgstr "Neue Landingpage"
 
 msgid "Landingpage"
 msgstr "Landingpage"
+
+msgid "Enter a valid domain name only (without protocol like http://)"
+msgstr "Gib einen gültigen Domainnamen ein (ohne Protokoll wie http://)"
 
 msgid "Enter a valid plain or internationalized domain name value"
 msgstr ""

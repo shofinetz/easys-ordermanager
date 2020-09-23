@@ -1,5 +1,8 @@
 # Changelog
 
+# 1.4.11 (2020-09-23)
+Update german translations
+
 # 1.4.10 (2020-09-23)
 Updates to Serializer v1 & v2
 see [serializer changelog](https://github.com/RegioHelden/easys-ordermanager/blob/master/CHANGELOG_SERIALIZER.md)
