@@ -131,6 +131,39 @@ LOGO_TYPE_CHOICES = Choices(
     (LOGO_TYPE_COMPOSITE_MARK, 'composite', _('Composite mark')),
 )
 
+WEBSITE_DESIGN_PREFERENCE_MINIMALISTIC = 1
+WEBSITE_DESIGN_PREFERENCE_BALANCED = 2
+WEBSITE_DESIGN_PREFERENCE_EMBELLISHED = 3
+WEBSITE_DESIGN_PREFERENCE_MINIMALISTIC_EMBELLISHED = Choices(
+    (WEBSITE_DESIGN_PREFERENCE_MINIMALISTIC, _('Minimalistic')),
+    (WEBSITE_DESIGN_PREFERENCE_BALANCED, _('Balanced minimalistic / embellished')),
+    (WEBSITE_DESIGN_PREFERENCE_EMBELLISHED, _('Embellished')),
+)
+
+WEBSITE_DESIGN_PREFERENCE_MODERN = 1
+WEBSITE_DESIGN_PREFERENCE_CLASSIC = 3
+WEBSITE_DESIGN_PREFERENCE_MODERN_CLASSIC = Choices(
+    (WEBSITE_DESIGN_PREFERENCE_MODERN, _('Modern')),
+    (WEBSITE_DESIGN_PREFERENCE_BALANCED, _('Balanced modern / classic')),
+    (WEBSITE_DESIGN_PREFERENCE_CLASSIC, _('Classic')),
+)
+
+WEBSITE_DESIGN_PREFERENCE_SIMPLE = 1
+WEBSITE_DESIGN_PREFERENCE_STRIKING = 3
+WEBSITE_DESIGN_PREFERENCE_SIMPLE_STRIKING = Choices(
+    (WEBSITE_DESIGN_PREFERENCE_SIMPLE, _('Simple')),
+    (WEBSITE_DESIGN_PREFERENCE_BALANCED, _('Balanced simple / striking')),
+    (WEBSITE_DESIGN_PREFERENCE_STRIKING, _('Striking')),
+)
+
+WEBSITE_DESIGN_PREFERENCE_TEXT = 1
+WEBSITE_DESIGN_PREFERENCE_PICTURE = 3
+WEBSITE_DESIGN_PREFERENCE_TEXT_PICTURE = Choices(
+    (WEBSITE_DESIGN_PREFERENCE_TEXT, _('Text-heavy')),
+    (WEBSITE_DESIGN_PREFERENCE_BALANCED, _('Balanced text-heavy / picture-heavy')),
+    (WEBSITE_DESIGN_PREFERENCE_PICTURE, _('Picture-heavy')),
+)
+
 DOMAIN_TYPE_NEW = 1
 DOMAIN_TYPE_TRANSFER = 2
 DOMAIN_TYPE_EXTERNAL = 3
@@ -1832,25 +1865,29 @@ class OrderLineWebsiteSerializer(serializers.Serializer):
     website design choice between minimalistic and embellished
 
     """
-    design_preference_minimalistic_embellished = serializers.IntegerField(allow_null=True, required=False)
+    design_preference_minimalistic_embellished = serializers.IntegerField(
+        choices=WEBSITE_DESIGN_PREFERENCE_MINIMALISTIC_EMBELLISHED, allow_null=True, required=False)
 
     """
     website design choice between modern and classic
 
     """
-    design_preference_modern_classic = serializers.IntegerField(allow_null=True, required=False)
+    design_preference_modern_classic = serializers.IntegerField(
+        choices=WEBSITE_DESIGN_PREFERENCE_MODERN_CLASSIC, allow_null=True, required=False)
 
     """
     website design choice between simple and striking
 
     """
-    design_preference_simple_striking = serializers.IntegerField(allow_null=True, required=False)
+    design_preference_simple_striking = serializers.IntegerField(
+        choices=WEBSITE_DESIGN_PREFERENCE_SIMPLE_STRIKING, allow_null=True, required=False)
 
     """
     website design choice between text and picture
 
     """
-    design_preference_text_picture = serializers.IntegerField(allow_null=True, required=False)
+    design_preference_text_picture = serializers.IntegerField(
+        choices=WEBSITE_DESIGN_PREFERENCE_TEXT_PICTURE, allow_null=True, required=False)
 
     """
     textual description of wishes and requirements for the website design

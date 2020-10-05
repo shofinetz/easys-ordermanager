@@ -1,5 +1,17 @@
 # Serializer changes
 
+## 1.4.12
+
+### v2
+
+#### `OrderLineWebsiteSerializer`
+
+* Added proper choices for
+    * `design_preference_minimalistic_embellished`
+    * `design_preference_modern_classic`
+    * `design_preference_simple_striking`
+    * `design_preference_text_picture`
+
 ## 1.4.10
 
 ### v1/v2

@@ -571,6 +571,42 @@ msgstr "Neue Landingpage"
 msgid "Landingpage"
 msgstr "Landingpage"
 
+msgid "Minimalistic"
+msgstr "Minimalistisch"
+
+msgid "Balanced minimalistic / embellished"
+msgstr "Ausgewogen minimalistisch / ausgeschmückt"
+
+msgid "Embellished"
+msgstr "Ausgeschmückt"
+
+msgid "Modern"
+msgstr "Modern"
+
+msgid "Balanced modern / classic"
+msgstr "Ausgewogen modern / klassisch"
+
+msgid "Classic"
+msgstr "Klassisch"
+
+msgid "Simple"
+msgstr "Schlicht"
+
+msgid "Balanced simple / striking"
+msgstr "Ausgewogen schlicht / markant"
+
+msgid "Striking"
+msgstr "Markant"
+
+msgid "Text-heavy"
+msgstr "Textlastig"
+
+msgid "Balanced text-heavy / picture-heavy"
+msgstr "Ausgewogen textlastig / bildlastig"
+
+msgid "Picture-heavy"
+msgstr "Bildlastig"
+
 msgid "Enter a valid domain name only (without protocol like http://)"
 msgstr "Gib einen gültigen Domainnamen ein (ohne Protokoll wie http://)"
 
