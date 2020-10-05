@@ -296,7 +296,7 @@ msgid "From customer"
 msgstr "Vom Kunden"
 
 msgid "Regiohelden photos"
-msgstr ""
+msgstr "Stock-Photos"
 
 msgid "Color from Logo/Website"
 msgstr "Farbe von Logo/Website"
