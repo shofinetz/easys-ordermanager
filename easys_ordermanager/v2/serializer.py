@@ -1865,28 +1865,28 @@ class OrderLineWebsiteSerializer(serializers.Serializer):
     website design choice between minimalistic and embellished
 
     """
-    design_preference_minimalistic_embellished = serializers.IntegerField(
+    design_preference_minimalistic_embellished = serializers.ChoiceField(
         choices=WEBSITE_DESIGN_PREFERENCE_MINIMALISTIC_EMBELLISHED, allow_null=True, required=False)
 
     """
     website design choice between modern and classic
 
     """
-    design_preference_modern_classic = serializers.IntegerField(
+    design_preference_modern_classic = serializers.ChoiceField(
         choices=WEBSITE_DESIGN_PREFERENCE_MODERN_CLASSIC, allow_null=True, required=False)
 
     """
     website design choice between simple and striking
 
     """
-    design_preference_simple_striking = serializers.IntegerField(
+    design_preference_simple_striking = serializers.ChoiceField(
         choices=WEBSITE_DESIGN_PREFERENCE_SIMPLE_STRIKING, allow_null=True, required=False)
 
     """
     website design choice between text and picture
 
     """
-    design_preference_text_picture = serializers.IntegerField(
+    design_preference_text_picture = serializers.ChoiceField(
         choices=WEBSITE_DESIGN_PREFERENCE_TEXT_PICTURE, allow_null=True, required=False)
 
     """
