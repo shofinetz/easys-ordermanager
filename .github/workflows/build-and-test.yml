@@ -69,10 +69,8 @@ jobs:
         
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
           pip install setuptools wheel twine
           pip install -q Django==${{ matrix.django-version }}
-          pip install .
           pip install -r requirements-test.txt
           
       - name: Publish to Pipy
@@ -80,6 +78,6 @@ jobs:
           TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: |
-          python -c "print('I should have published to pipy')"
+          python -c "print('I should have published to pipy');import pathlib;pathlib.Path().absolute();print(pathlib.Path().absolute())"
           python setup.py sdist bdist_wheel
           twine upload dist/*
