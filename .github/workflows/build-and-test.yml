@@ -53,8 +53,9 @@ jobs:
   publish:
     runs-on: ubuntu-16.04
     # only if build job was finished with success
-#     if: success() && github.event_name == 'release' && github.event.action == 'published'
+    if: success() && github.event_name == 'release' && github.event.action == 'published'
     needs: [build]
+    # since we want to publish for the exact python and django version, strategy is not needed.
 #     strategy:
 #       matrix:
 #         python-version: [3.6]
