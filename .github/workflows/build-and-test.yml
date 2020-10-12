@@ -79,5 +79,5 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: |
           python -c "print('I should have published to pipy')"
-#         python setup.py sdist bdist_wheel
-#         twine upload dist/*
+          python setup.py sdist bdist_wheel
+          twine upload dist/*
