@@ -54,25 +54,24 @@ jobs:
     runs-on: ubuntu-16.04
     # only if build job was finished with success
 #     if: success() && github.event_name == 'release' && github.event.action == 'published'
-#     if: success()
     needs: [build]
-    strategy:
-      matrix:
-        python-version: [3.6]
-        django-version: [2.2.10]
+#     strategy:
+#       matrix:
+#         python-version: [3.6]
+#         django-version: [2.2.10]
     
     steps:
       - uses: actions/checkout@v2
         
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Set up Python 3.6
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: 3.6
         
       - name: Install dependencies
         run: |
           pip install setuptools wheel twine
-          pip install -q Django==${{ matrix.django-version }}
+          pip install -q Django==2.2.10
           pip install .
           pip install -r requirements-test.txt
           
@@ -81,6 +80,5 @@ jobs:
           TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         run: |
-          python -c "print('I should have published to pipy');import pathlib;pathlib.Path().absolute();print(pathlib.Path().absolute())"
           python setup.py sdist bdist_wheel
           twine upload dist/*
