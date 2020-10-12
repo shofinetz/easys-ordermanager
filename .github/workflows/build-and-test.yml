@@ -49,18 +49,35 @@ jobs:
     - name: Test and coverage
       run: |
         coverage run --source=easys_ordermanager manage.py test
+      
+  # TODO check if should be integrated for every test run from the matrix
+  coverage:
+    runs-on: ubuntu-16.04
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v2
         
+      - name: Set up Python 3.6
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.6
+        
+      - name: Install dependencies
+        run: |
+          pip install -q Django==2.2.10
+          pip install .
+          pip install -r requirements-test.txt
+      
+      - name: Publish Coverage
+        run: |
+          coveralls --help
+    
   publish:
     runs-on: ubuntu-16.04
     # only if build job was finished with success
     if: success() && github.event_name == 'release' && github.event.action == 'published'
     needs: [build]
     # since we want to publish for the exact python and django version, strategy is not needed.
-#     strategy:
-#       matrix:
-#         python-version: [3.6]
-#         django-version: [2.2.10]
-    
     steps:
       - uses: actions/checkout@v2
         
