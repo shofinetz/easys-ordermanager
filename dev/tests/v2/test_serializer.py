@@ -12,8 +12,7 @@ class SerializerV2TestCase(TestCase):
         with open(os.path.join(settings.BASE_DIR, 'dev', 'tests', 'v2', 'example.json'), 'r') as f:
             self.fixture = json.load(f)
 
+            
     def test_validate_data(self):
         s = Serializer(data=self.fixture)
         self.assertTrue(s.is_valid(raise_exception=True))
-        # TODO REMOVE - just for test
-        self.assertTrue(False)
