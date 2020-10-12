@@ -15,3 +15,5 @@ class SerializerV2TestCase(TestCase):
     def test_validate_data(self):
         s = Serializer(data=self.fixture)
         self.assertTrue(s.is_valid(raise_exception=True))
+        # TODO REMOVE - just for test
+        self.assertTrue(False)
