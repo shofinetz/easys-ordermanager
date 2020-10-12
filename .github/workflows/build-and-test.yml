@@ -1,10 +1,11 @@
 name: Easys Order Manager
 
 on:
-#   push:
-#     branches: [ master ]
-#     tags:
-#       - '*'
+  push:
+    branches: [ master ]
+    tags:
+      - '*'
+  # For some reason this event is not triggered during a git push --tags
   release:
     types: [created, published]
 
@@ -74,12 +75,12 @@ jobs:
         # TODO run command for real
         run: |
           coveralls --help
-          
+          on:
     
   publish:
     runs-on: ubuntu-16.04
     # only if build job was finished with success
-    if: success() && github.event_name == 'release' && github.event.action == 'created'
+    if: success() && (github.event_name == 'release' && github.event.action == 'published' || startsWith(github.ref, 'refs/tags/v'))
     needs: [build]
     # since we want to publish for the exact python and django version, strategy is not needed.
     steps:
