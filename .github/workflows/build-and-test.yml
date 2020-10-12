@@ -7,14 +7,16 @@ on:
     types: [published]
 
 jobs:
-  build:
 
+  build:
     # check if maybe we can use ubuntu-latest
     runs-on: ubuntu-16.04
     strategy:
       matrix:
-        python-version: [3.6, 3.7, 3.8]
-        django-version: [1.11.28, 2.1.15, 2.2.10]
+        python-version: [3.8]
+        django-version: [2.2.10]
+#         python-version: [3.6, 3.7, 3.8]
+#         django-version: [1.11.28, 2.1.15, 2.2.10]
 
     steps:
     - uses: actions/checkout@v2
@@ -39,8 +41,7 @@ jobs:
         pip install -q Django==${{ matrix.django-version }}
         pip install .
         pip install -r requirements-test.txt
-#        pip install setuptools wheel twine
-
+ 
     - name: Lint with flake8
       run: |
         flake8 easys_ordermanager
@@ -48,3 +49,23 @@ jobs:
     - name: Test and coverage
       run: |
         coverage run --source=easys_ordermanager manage.py test
+        
+  publish:
+    # only if build job was finished with success
+#     if: success() && github.event_name == 'release' && github.event.action == 'published'
+    if: success()
+    needs: [build]
+    
+    runs-on: ubuntu-16.04
+    steps:
+      - name: Install dependencies
+        run: |
+          pip install setuptools wheel twine
+      - name: Publish to Pipy
+        env:
+          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+        run: |
+          python -c "print('I should have published to pipy')
+#         python setup.py sdist bdist_wheel
+#         twine upload dist/*
