@@ -52,8 +52,8 @@ class DomainNameValidator(RegexValidator):
 
             # validate the ascii encoding of it
             super(DomainNameValidator, self).__call__(asciival)
-            
-            
+
+
 # TO be removed while support for V1 is removed
 class ExtendedDomainNameValidator(RegexValidator):
     message = _('Enter a valid plain or internationalized domain name value')
