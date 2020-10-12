@@ -62,6 +62,8 @@ jobs:
         django-version: [2.2.10]
     
     steps:
+      - uses: actions/checkout@v2
+        
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
@@ -71,6 +73,7 @@ jobs:
         run: |
           pip install setuptools wheel twine
           pip install -q Django==${{ matrix.django-version }}
+          pip install .
           pip install -r requirements-test.txt
           
       - name: Publish to Pipy
