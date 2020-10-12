@@ -29,10 +29,9 @@ class DomainNameValidator(RegexValidator):
     message = _("Enter a valid domain name only (without protocol like http://)")
 
     def __init__(self, *args, **kwargs):
-        self.accept_idna = kwargs.pop("accept_idna",  True)
+        self.accept_idna = kwargs.pop("accept_idna", True)
         super(DomainNameValidator, self).__init__(*args, **kwargs)
 
-        
     def __call__(self, value):
         # validate
         try:
@@ -46,16 +45,15 @@ class DomainNameValidator(RegexValidator):
 
             # convert it unicode -> ascii
             try:
-                asciival =  idna.encode(smart_text(value)).decode()
+                asciival = idna.encode(smart_text(value)).decode()
             except UnicodeError:
                 # raise the original ASCII error
                 raise e
 
             # validate the ascii encoding of it
             super(DomainNameValidator, self).__call__(asciival)
-
             
-
+            
 # TO be removed while support for V1 is removed
 class ExtendedDomainNameValidator(RegexValidator):
     message = _('Enter a valid plain or internationalized domain name value')
