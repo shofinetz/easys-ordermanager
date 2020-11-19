@@ -48,7 +48,10 @@ jobs:
           pip install -q Django==2.2.10
           pip install .
           pip install -r requirements-test.txt
-        
+      
+      - name: Test
+        run: coverage run --source=easys_ordermanager manage.py test
+
       - name: Coveralls
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
