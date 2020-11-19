@@ -1,4 +1,4 @@
-name: Easys Order Manager build coverage and pubish
+name: Easys Order Manager build test and pubish
 
 on:
   - push
@@ -9,12 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-         python-version: [3.8]
+         python-version: [3.7, 3.8]
          django-version: [2.2.10]
-
     steps:
     - uses: actions/checkout@v2
-      
+
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
       with:
@@ -25,20 +24,26 @@ jobs:
         pip install -q Django==${{ matrix.django-version }}
         pip install .
         pip install -r requirements-test.txt
- 
+
     - name: Lint with flake8
       run: flake8 easys_ordermanager
 
     - name: Test
       run: coverage run --source=easys_ordermanager manage.py test
 
-    - name: Coveralls
-      env:
-        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-      run: coveralls
-
-#     - name: Coveralls
-#       uses: coverallsapp/github-action@master
-#       with:
-#         github-token: ${{ secrets.GITHUB_TOKEN }}
-
+  coverage:
+    name: Publish coverage
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+        
+      - name: Coveralls
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+        run: coveralls
