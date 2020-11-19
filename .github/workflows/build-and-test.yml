@@ -10,11 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.8]
-        django-version: [2.2.10]
-#         TODO use the bigger matrix
-#         python-version: [3.6, 3.7, 3.8]
-#         django-version: [1.11.28, 2.1.15, 2.2.10]
+         python-version: [3.8]
+         django-version: [2.2.10]
 
     steps:
     - uses: actions/checkout@v2
@@ -24,16 +21,6 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Cache pip
-      uses: actions/cache@v2
-      with:
-        path: ~/.cache/pip
-        # Look to see if there is a cache hit for the corresponding requirements file
-        key: ${{ runner.os }}-pip-${{ hashFiles('requirements-test.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip-
-          ${{ runner.os }}-
-
     - name: Install dependencies
       run: |
         pip install -q Django==${{ matrix.django-version }}
@@ -41,64 +28,10 @@ jobs:
         pip install -r requirements-test.txt
  
     - name: Lint with flake8
-      run: |
-        flake8 easys_ordermanager
-        
-    - name: Unit tests
-      run: make test
+      run: flake8 easys_ordermanager
 
-    - name: Coveralls
-      uses: AndreMiras/coveralls-python-action@develop
-      with:
-        parallel: true
-  
-  coverage:
-    runs-on: ubuntu-latest
-    needs: [build]
-    steps:
-      - uses: actions/checkout@v2
-        
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-        
-      - name: Install dependencies
-        run: |
-          pip install -q Django==2.2.10
-          pip install .
-          pip install -r requirements-test.txt
-      
-      - name: Coveralls Finished
-        uses: AndreMiras/coveralls-python-action@develop
-        with:
-          parallel-finished: true
-    
-  publish:
-    runs-on: ubuntu-latest
-    # only if build job was finished with success
-    if: success() && github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
-    needs: [build]
-    # since we want to publish for the exact python and django version, strategy is not needed.
-    steps:
-      - uses: actions/checkout@v2    
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-        
-      - name: Install dependencies
-        run: |
-          pip install setuptools wheel
-          pip install -q Django==2.2.10
-          pip install .
-          pip install -r requirements-test.txt
-          
-      - name: Build a binary wheel and a source tarball
-        run: python setup.py sdist bdist_wheel
-          
-      - name: Publish to Pipy    
-        uses: pypa/gh-action-pypi-publish@master
-        with:
-          user: __token__
-          password: ${{ secrets.pypi_secret }}
+    - name: Test
+      run: coverage run --source=easys_ordermanager manage.py test
+
+    - name: Publish Coverage
+      run: coveralls
