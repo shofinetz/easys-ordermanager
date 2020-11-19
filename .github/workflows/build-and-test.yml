@@ -65,8 +65,12 @@ jobs:
           pip install .
           pip install -r requirements-test.txt
       
-      - name: Publish Coverage
-        run: coveralls
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+#       - name: Publish Coverage
+#         run: coveralls
     
   publish:
     runs-on: ubuntu-latest
