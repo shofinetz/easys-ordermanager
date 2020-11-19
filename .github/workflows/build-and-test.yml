@@ -29,5 +29,5 @@ jobs:
       run: flake8 easys_ordermanager
 
     - name: Test
-      run: manage.py test
+      run: python manage.py test
   
