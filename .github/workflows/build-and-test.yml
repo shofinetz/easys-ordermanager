@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-#         python-version: [3.8]
-#         django-version: [2.2.10]
+        python-version: [3.8]
+        django-version: [2.2.10]
 #         TODO use the bigger matrix
-        python-version: [3.6, 3.7, 3.8]
-        django-version: [1.11.28, 2.1.15, 2.2.10]
+#         python-version: [3.6, 3.7, 3.8]
+#         django-version: [1.11.28, 2.1.15, 2.2.10]
 
     steps:
     - uses: actions/checkout@v2
@@ -66,10 +66,7 @@ jobs:
           pip install -r requirements-test.txt
       
       - name: Publish Coverage
-        # TODO run command for real
-        run: |
-          coveralls --help
-          on:
+        run: coveralls
     
   publish:
     runs-on: ubuntu-latest
