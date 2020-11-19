@@ -43,11 +43,15 @@ jobs:
     - name: Lint with flake8
       run: |
         flake8 easys_ordermanager
+        
+    - name: Unit tests
+      run: make test
 
-    - name: Test and coverage
-      run: |
-        coverage run --source=easys_ordermanager manage.py test
-      
+    - name: Coveralls
+      uses: AndreMiras/coveralls-python-action@develop
+      with:
+        parallel: true
+  
   coverage:
     runs-on: ubuntu-latest
     needs: [build]
@@ -65,12 +69,10 @@ jobs:
           pip install .
           pip install -r requirements-test.txt
       
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
+      - name: Coveralls Finished
+        uses: AndreMiras/coveralls-python-action@develop
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-#       - name: Publish Coverage
-#         run: coveralls
+          parallel-finished: true
     
   publish:
     runs-on: ubuntu-latest
